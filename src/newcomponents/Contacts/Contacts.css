@@ -1,0 +1,27 @@
+.contacts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0.25;
+  flex-basis: 25%;
+  border: 0px 0px 10px 0px;
+}
+
+.contacts__heading {
+  text-align: center;
+  /* padding: 10px 0px; */
+  background: rgba(2, 12, 36, 1);
+  color: #ccc !important ;
+  /* border-radius: 20px 1px 20px 1px; */
+}
+.contacts__heading > h1 {
+  font-weight: 545;
+  font-size: 22pt;
+}
+
+.contacts__list {
+  flex: 1;
+  overflow-y: scroll;
+  color: #ccc !important;
+  background-color: #020C24 ;
+}
