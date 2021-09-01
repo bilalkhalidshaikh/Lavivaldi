@@ -1,3 +1,24 @@
+
+import ReactAudioPlayer from "react-audio-player";
+import voice from "../Images/audio.mp3";
+import Player from 'griffith'
+
+
+
+const sources = {
+  hd: {
+    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_hd.mp4',
+  },
+  sd: {
+    play_url: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4',
+  },
+}
+
+
+const d = new Date();
+const time = d.toLocaleTimeString();
+console.log(time);
+
 const userChats = [
   {
     id: 1,
@@ -7,31 +28,92 @@ const userChats = [
       {
         type: "sent",
         content: "Hey! How are you?",
-        timestamp: "3:00 PM"
+        timestamp: time,
       },
       {
         type: "received",
-        content: "Hey! I'm fine! How about you?",
-        timestamp: "3:00 PM"
-      }
-    ]
+        content: (
+          <ReactAudioPlayer
+            style={{ backgroundColor: "transparent", borderRadius: "0%" }}
+            src={voice}
+            controls
+          />
+        ),
+        timestamp: time,
+      },
+      {
+        type: "sent",
+        content: "Hey! How are you?",
+        timestamp: time,
+      },
+      
+      {
+        type: "sent",
+        content: <img src="https://picsum.photos/200" />,
+        timestamp: time,
+      },
+      {
+        type: "received",
+        content: "Next Question Pleases",
+        timestamp: time,
+      },
+      {
+        type: "received",
+        content: <Player sources={sources} />,
+        timestamp: time,
+      },
+      {
+        type: "sent",
+        content: <img src="https://picsum.photos/200" />,
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 2,
     name: "Bilal",
     photoUrl: "./images/female.png",
     messages: [
+   
+      // {
+      //   type: "sent",
+      //   content: <img src="https://picsum.photos/200" />,
+      //   timestamp: time,
+      // },
       {
-        type: "sent",
-        content: "Hey! How are you?",
-        timestamp: "6:00 PM"
+        type: "received",
+        content: <> <img src="https://picsum.photos/200" /> <br /> <p>  Here is Image Caption</p> </> ,
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hey! I'm fine!",
-        timestamp: "6:20 PM"
-      }
-    ]
+        timestamp: time,
+      },
+      {
+        type: "sent",
+        content: <Player sources={sources} />,
+        timestamp: time,
+      },
+      {
+        type: "received",
+        content: "Hey! I'm fine!",
+        timestamp: time,
+      },
+      {
+        type: "sent",
+        content: (
+          <ReactAudioPlayer
+            style={{ backgroundColor: "transparent", borderRadius: "0%" }}
+            src={
+              "http://commondatastorage.googleapis.com/codeskulptor-assets/Epoq-Lepidoptera.ogg"
+            }
+            controls
+          />
+        ),
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 3,
@@ -41,14 +123,14 @@ const userChats = [
       {
         type: "received",
         content: "Yo! What's up?",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Nothing much. What about you?",
-        timestamp: "9:10 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 4,
@@ -58,14 +140,14 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 5,
@@ -75,19 +157,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 6,
@@ -97,19 +179,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 7,
@@ -119,19 +201,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 8,
@@ -141,19 +223,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 9,
@@ -163,19 +245,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
   {
     id: 10,
@@ -185,19 +267,19 @@ const userChats = [
       {
         type: "received",
         content: "Hello!",
-        timestamp: "9:00 AM"
+        timestamp: time,
       },
       {
         type: "sent",
         content: "Good Morning!",
-        timestamp: "9:10 AM"
+        timestamp: time,
       },
       {
         type: "received",
         content: "Hor gogga",
-        timestamp: "11:00 AM"
-      }
-    ]
+        timestamp: time,
+      },
+    ],
   },
 ];
 

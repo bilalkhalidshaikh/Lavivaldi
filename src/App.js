@@ -8,6 +8,7 @@ import {
   AdminNotification,
 } from "./Admin";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+// import "node_modules/video-react/dist/video-react.css";
 
 function App() {
   return (

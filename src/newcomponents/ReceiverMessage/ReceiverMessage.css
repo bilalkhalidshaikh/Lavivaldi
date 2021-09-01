@@ -1,6 +1,7 @@
 .receivermessage {
   align-self: flex-start;
-  background: white;
+  background: #020c24;
+  color: #ccc !important;
   padding: 5px;
   max-width: 45%;
   min-width: 100px;
@@ -16,5 +17,5 @@
   float: right;
   padding: 0px 5px;
   font-size: 0.9em;
-  color: #c9c7c7;
+  color: #020c24 !important;
 }

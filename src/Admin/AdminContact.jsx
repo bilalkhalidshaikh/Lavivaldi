@@ -10,16 +10,24 @@ import {
   Space,
   Tag,
   Table,
-  Avatar,
   Image,
   Menu,
   Dropdown,
   Drawer,
   Card,
   Descriptions,
+  Col,
+  Row,
+  Select,
+  DatePicker,
+  Form,
+  Avatar,
+  Typography,
+  List,
 } from "antd";
-import { ListGroup } from "react-bootstrap";
+// import { ListGroup } from "react-bootstrap";
 import { AudioOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { DownOutlined } from "@ant-design/icons";
 import {
   EditOutlined,
@@ -27,6 +35,10 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import SweetAlert from "react-bootstrap-sweetalert";
+import AvatarImg from "./../Images/avatar.png";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 
 function RemoteData() {
   return (
@@ -67,6 +79,250 @@ function RemoteData() {
   );
 }
 
+const { Option } = Select;
+
+class DrawerForm extends React.Component {
+  state = { visible: false };
+
+  showDrawer = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <Button type="primary" onClick={this.showDrawer}>
+          <PlusOutlined /> New account
+        </Button>
+        <Drawer
+          title="Create a new account"
+          width={720}
+          onClose={this.onClose}
+          visible={this.state.visible}
+          bodyStyle={{ paddingBottom: 80 }}
+          footer={
+            <div
+              style={{
+                textAlign: "right",
+              }}
+            >
+              <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+                Cancel
+              </Button>
+              <Button onClick={this.onClose} type="primary">
+                Submit
+              </Button>
+            </div>
+          }
+        >
+          <Form layout="vertical" hideRequiredMark>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="name"
+                  label="Name"
+                  rules={[
+                    { required: true, message: "Please enter user name" },
+                  ]}
+                >
+                  <Input placeholder="Please enter user name" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="url"
+                  label="Url"
+                  rules={[{ required: true, message: "Please enter url" }]}
+                >
+                  <Input
+                    style={{ width: "100%" }}
+                    addonBefore="http://"
+                    addonAfter=".com"
+                    placeholder="Please enter url"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="owner"
+                  label="Owner"
+                  rules={[
+                    { required: true, message: "Please select an owner" },
+                  ]}
+                >
+                  <Select placeholder="Please select an owner">
+                    <Option value="xiao">Xiaoxiao Fu</Option>
+                    <Option value="mao">Maomao Zhou</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="type"
+                  label="Type"
+                  rules={[
+                    { required: true, message: "Please choose the type" },
+                  ]}
+                >
+                  <Select placeholder="Please choose the type">
+                    <Option value="private">Private</Option>
+                    <Option value="public">Public</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="approver"
+                  label="Approver"
+                  rules={[
+                    { required: true, message: "Please choose the approver" },
+                  ]}
+                >
+                  <Select placeholder="Please choose the approver">
+                    <Option value="jack">Jack Ma</Option>
+                    <Option value="tom">Tom Liu</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="dateTime"
+                  label="DateTime"
+                  rules={[
+                    { required: true, message: "Please choose the dateTime" },
+                  ]}
+                >
+                  <DatePicker.RangePicker
+                    style={{ width: "100%" }}
+                    getPopupContainer={(trigger) => trigger.parentElement}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item
+                  name="description"
+                  label="Description"
+                  rules={[
+                    {
+                      required: true,
+                      message: "please enter url description",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    rows={4}
+                    placeholder="please enter url description"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </Drawer>
+      </>
+    );
+  }
+}
+
+const useStylesGrid = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
+
+function FullWidthGrid() {
+  const classes = useStylesGrid();
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+
+const useStylesGridTwo = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
+
+function FullWidthGridTwo() {
+  const classes = useStylesGridTwo();
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}></Paper>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+
+const { Title } = Typography;
+
 const Profile = ({ text }) => {
   const [visible, setVisible] = useState(false);
 
@@ -81,6 +337,15 @@ const Profile = ({ text }) => {
   function log(e) {
     console.log(e);
   }
+
+  const data = [
+    "Racing car sprays burning fuel into crowd.",
+    "Japanese princess to wed commoner.",
+    "Australian walks 100km after outback crash.",
+    "Man charged over missing wedding girl.",
+    "Los Angeles battles huge wildfires.",
+  ];
+
   return (
     <>
       <Button type="text" onClick={showDrawer}>
@@ -88,59 +353,63 @@ const Profile = ({ text }) => {
       </Button>
       <Drawer
         placement="right"
-        closable={false}
+        closable={true}
         onClose={onClose}
         visible={visible}
         width={350}
+        bodyStyle={{
+          paddingBottom: 80,
+          backgroundColor: "#020C24",
+          color: "#ccc",
+        }}
       >
         <Card
-          style={{ width: 300 }}
-          actions={[
-            <SettingOutlined key="setting" />,
-            <EditOutlined key="edit" />,
-            <EllipsisOutlined key="ellipsis" />,
-          ]}
+          style={{
+            width: 300,
+            backgroundColor: "#020C24",
+            color: "#ccc",
+            border: "none",
+          }}
         >
           <Meta
             avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              <Avatar
+                size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                src={AvatarImg}
+              />
             }
-            title="Jhon Doe"
-            description="Teacher"
+            title={
+              <Title level={2} style={{ color: "#ccc" }}>
+                Jhon Tacchi
+              </Title>
+            }
           />
-          <hr />
-          <ListGroup>
-            <ListGroup.Item disabled>Name</ListGroup.Item>
-            <ListGroup.Item>Surname</ListGroup.Item>
-            <ListGroup.Item>Email</ListGroup.Item>
-            <ListGroup.Item>Phone</ListGroup.Item>
-            <ListGroup.Item>Address</ListGroup.Item>
-            <ListGroup.Item>City</ListGroup.Item>
-            <ListGroup.Item>Nation</ListGroup.Item>
-          </ListGroup>
-          <hr />
-         
-          <h5 style={{textAlign:"center"}}>  Teachers</h5>
-          <Tag closable onClose={log} color="green"> 
-            Jhon Doe
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-            Jhon Doe 
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-            Jhon Doe
-          </Tag>
-       <hr/>
-          <h5 style={{textAlign:"center"}}>  Tags</h5>
-          <Tag closable onClose={log} color="green"> 
-          Tag
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-          Tag
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-          Tag
-          </Tag>
+
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <List size="small" style={{ border: "none", outline: "none" }}>
+            <List.Item style={{ color: "#ccc" }}>Name : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Surname : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Email : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Phone : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Address : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>City : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Nation : </List.Item>
+          </List>
+
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <Title level={2} style={{ textAlign: "center", color: "#ccc" }}>
+            {" "}
+            Teachers
+          </Title>
+          <FullWidthGrid />
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <Title level={2} style={{ textAlign: "center", color: "#ccc" }}>
+            Tags{" "}
+          </Title>
+          <FullWidthGridTwo />
         </Card>
       </Drawer>
     </>
@@ -161,6 +430,15 @@ const ProfileTwo = ({ text }) => {
   function log(e) {
     console.log(e);
   }
+
+  const data = [
+    "Racing car sprays burning fuel into crowd.",
+    "Japanese princess to wed commoner.",
+    "Australian walks 100km after outback crash.",
+    "Man charged over missing wedding girl.",
+    "Los Angeles battles huge wildfires.",
+  ];
+
   return (
     <>
       <Button type="text" onClick={showDrawer}>
@@ -168,59 +446,62 @@ const ProfileTwo = ({ text }) => {
       </Button>
       <Drawer
         placement="right"
-        closable={false}
+        closable={true}
         onClose={onClose}
         visible={visible}
         width={350}
+        bodyStyle={{
+          paddingBottom: 80,
+          backgroundColor: "#020C24",
+          color: "#ccc",
+        }}
       >
         <Card
-          style={{ width: 300 }}
-          actions={[
-            <SettingOutlined key="setting" />,
-            <EditOutlined key="edit" />,
-            <EllipsisOutlined key="ellipsis" />,
-          ]}
+          style={{
+            width: 300,
+            backgroundColor: "#020C24",
+            color: "#ccc",
+            border: "none",
+          }}
         >
           <Meta
             avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              <Avatar
+                size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4g8xUnnDU4kVOp8_-3f3aPDusw_D2AlyXw&usqp=CAU"}
+              />
             }
-            title="Mike Brown"
-            description="Student"
+            title={
+              <Title level={2} style={{ color: "#ccc" }}>
+               Jim Grean
+              </Title>
+            }
           />
-          <hr />
-          <ListGroup>
-            <ListGroup.Item disabled>Name</ListGroup.Item>
-            <ListGroup.Item>Surname</ListGroup.Item>
-            <ListGroup.Item>Email</ListGroup.Item>
-            <ListGroup.Item>Phone</ListGroup.Item>
-            <ListGroup.Item>Address</ListGroup.Item>
-            <ListGroup.Item>City</ListGroup.Item>
-            <ListGroup.Item>Nation</ListGroup.Item>
-          </ListGroup>
-          <hr />
-         
-          <h5 style={{textAlign:"center"}}>  Teachers</h5>
-          <Tag closable onClose={log} color="green"> 
-            Jhon Doe
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-            Jhon Doe 
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-            Jhon Doe
-          </Tag>
-       <hr/>
-          <h5 style={{textAlign:"center"}}>  Tags</h5>
-          <Tag closable onClose={log} color="green"> 
-          Tag
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-          Tag
-          </Tag>
-          <Tag closable onClose={log}  color="green">
-          Tag
-          </Tag>
+
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <List size="small" style={{ border: "none", outline: "none" }}>
+            <List.Item style={{ color: "#ccc" }}>Name : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Surname : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Email : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Phone : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Address : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>City : </List.Item>
+            <List.Item style={{ color: "#ccc" }}>Nation : </List.Item>
+          </List>
+
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <Title level={2} style={{ textAlign: "center", color: "#ccc" }}>
+           Students
+          </Title>
+          <FullWidthGrid />
+          <Divider style={{ border: "1px solid #ccc" }} />
+
+          <Title level={2} style={{ textAlign: "center", color: "#ccc" }}>
+            Tags
+          </Title>
+          <FullWidthGridTwo />
         </Card>
       </Drawer>
     </>
