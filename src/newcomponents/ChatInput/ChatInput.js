@@ -262,9 +262,10 @@ const ChatInput = ({ setMessages }) => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
+
   };
 
-  let [count,setCount] = useState(0)
+  let [count, setCount] = useState(0);
 
   // const showVoiceBar = () =>{
   $(document).ready(function () {
@@ -273,30 +274,29 @@ const ChatInput = ({ setMessages }) => {
     $(".btn-mic").click(function () {
       $(".voicebar").fadeIn("fast");
       $(".chatinput").hide();
-
     });
     $(".fa-paper-plane").click(function () {
       $(".chatinput").fadeIn("fast");
       $(".voicebar").hide();
-
     });
-
   });
 
   const showCounter = () =>{
     for(let i = 0; i < 90000; i++) {
       setTimeout(() => {
-        setCount(count+i)
+        setCount(count+i-i+i)  
         console.log(count)
-      }, 1000);
+      }, 100);
     }
   }
 
-  const clearCounter = ()=>{
-    setCount(0)
+  const clearCounter = () => {
+    setCount(0);
+  };
+
+  const deleteBlob  = ()=>{
+    setBlobURL("")
   }
-
-
 
   return (
     <div>
@@ -316,24 +316,31 @@ const ChatInput = ({ setMessages }) => {
           </form>
           <div className="chatinput__formIcons"></div>
           <div className="chatinput__icons">
-            <AttachFileIcon fontSize="large" color="white"  />
+            <AttachFileIcon
+              fontSize="large"
+              color="white"
+              style={{ color: "white" }}
+            />
           </div>
-          <div className="chatinput__icons btn-mic show-count">
-            <IconButton onClick={showCounter} style={{width:40,height:40}}>
-
-            <MicIcon fontSize="large" color="white" />
+          <div className="chatinput__icons btn-mic show-count" onClick={showCounter}>
+            <IconButton
+              color="white"
+              onClick={StartRecordVoice}
+              style={{ width: 40, height: 40, color: "White" }}
+            >
+              <MicIcon fontSize="large" color="white" />
             </IconButton>
           </div>
         </div>
         <div className="chatinput__icons">
-          <SendIcon fontSize="large" color="white"  />
+          <SendIcon fontSize="large" color="white" />
         </div>
       </div>
 
       <div className="voicebar">
         <div className="chatinput__form-voice">
           <div className="chatinput__icons-voice">
-            <IconButton  color="white" style={{color:"white"}}>
+            <IconButton color="white" style={{ color: "white" }}>
               <MicNoneIcon fontSize="large" />
             </IconButton>
             <span>{count}</span>
@@ -354,15 +361,65 @@ const ChatInput = ({ setMessages }) => {
         </div>
         <div className="chatinput__formIcons">
           <div className="chatinput__icons-voice">
-            <IconButton color="white" style={{color:"#020C24"}}>
-              <DeleteOutlinedIcon fontSize="large" color="white"  />
+            <IconButton color="white" style={{ color: "#020C24" }} onClick={deleteBlob}>
+              <DeleteOutlinedIcon fontSize="large" color="white" />
             </IconButton>
           </div>
         </div>
         <div className="chatinput__icons-voice">
-          <IconButton  color="white" style={{color:"white",backgroundColor:"#020C24"}} onClick={()=>{setCount(0)}}>
-          <i class="fa fa-paper-plane"></i>
+          <IconButton
+            color="white"
+            style={{ color: "white", backgroundColor: "#020C24" }}
+            onClick={handleClick}
+          >
+            <i class="fa fa-paper-plane" onClick={StopRecordVoice}></i>
           </IconButton>
+          <Snackbar
+                      open={openNot}
+                      autoHideDuration={6000}
+                      onClose={handleCloseNot}
+                    >
+                      <Alert onClose={handleCloseNot} severity="success">
+                        Voice Meseage Sent Successfully!{" "}
+                        <div>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleClickOpen}
+                          >
+                            Listen ?
+                          </Button>
+                          <Dialog
+                            open={openModal}
+                            onClose={handleCloseModal}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                          >
+                            <DialogTitle id="alert-dialog-title">
+                              {"This is Your Voice :)"}
+                            </DialogTitle>
+                            <DialogContent>
+                              <audio src={blobURL} controls />
+                            </DialogContent>
+                            <DialogActions>
+                              <Button
+                                onClick={handleCloseModal}
+                                color="primary"
+                              >
+                                Not Okay
+                              </Button>
+                              <Button
+                                onClick={handleCloseModal}
+                                color="primary"
+                                autoFocus
+                              >
+                                Okay
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                        </div>
+                      </Alert>
+                    </Snackbar>
         </div>
       </div>
     </div>
