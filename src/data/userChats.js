@@ -15,6 +15,11 @@ const sources = {
 }
 
 
+const AudioUrl = sessionStorage.getItem("audioUrl");
+console.log(AudioUrl)
+
+
+
 const d = new Date();
 const time = d.toLocaleTimeString();
 console.log(time);
@@ -64,7 +69,11 @@ const userChats = [
       },
       {
         type: "sent",
-        content: <img src="https://picsum.photos/200" />,
+        content: (
+                <>
+                <audio src={AudioUrl} controls />
+                </>
+          ),
         timestamp: time,
       },
     ],
@@ -128,6 +137,18 @@ const userChats = [
       {
         type: "sent",
         content: "Nothing much. What about you?",
+        timestamp: time,
+      },
+      {
+        type: "sent",
+        content: (
+          <>
+          {sessionStorage.length ?  <audio src={AudioUrl} controls /> :  null
+          
+         }
+  
+          </>
+        ),
         timestamp: time,
       },
     ],

@@ -4,6 +4,17 @@
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  /* display: none; */
+}
+
+.voicebar{
+  padding: -5px 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 0, 0, 1);
+  color: #ccc;
 }
 
 .chatinput__form {
@@ -11,7 +22,16 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  background-color: white;
+ background-color: white;
+  color: #ccc;
+  border-radius: 50px;
+}
+.chatinput__form-voice {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 0, 0, 1);
   border-radius: 50px;
 }
 .chatinput__form .MuiSvgIcon-root {
@@ -35,7 +55,7 @@
   align-items: center;
 }
 .chatinput__icons {
-  background: #020C24;;
+  background: #020C24;
   border-radius: 50%;
   margin-left: 10px;
   display: flex;
@@ -53,4 +73,10 @@
   position: absolute;
   bottom: 10%;
   left: 10%;
+}
+
+
+.fa-paper-plane{
+  color: white !important;
+  font-size: 22pt !important;
 }
