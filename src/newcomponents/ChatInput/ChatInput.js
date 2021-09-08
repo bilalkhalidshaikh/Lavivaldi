@@ -252,11 +252,11 @@ const ChatInput = ({ setMessages }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
-  const [showFIleBar, setShowFIleBar] = useState(true);
+  const [showFIleBar, setShowFIleBar] = useState(false);
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
-    setShowFIleBar(true)
+    setShowFIleBar(true);
   };
 
   const handleCloseMenu = () => {
@@ -375,19 +375,20 @@ const ChatInput = ({ setMessages }) => {
              Close
             </button> */}
             {/* <button onClick={()=>{setShowFIleBar(false)}}>close</button> */}
-            <IconButton onClick={()=>{setShowFIleBar(false)}}>
-              <CloseIcon/>
-              </IconButton>
-              <h3>Your Selected Video</h3>
-              {videoURL === undefined ? null : (
-                        <video
-                          src={videoURL}
-                          width={200}
-                          height={150}
-                          controls
-                        />
-                      )}
-                      <hr />
+            <IconButton
+              onClick={() => {
+                setShowFIleBar(false);
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <h6 style={{color:"#ccc"}}>   {videoURL === undefined ? "Please Select" : (
+             "Here is the Video"
+            )}</h6>
+            {videoURL === undefined ? null : (
+              <video src={videoURL} width={200} height={150} controls />
+            )}
+            <hr />
           </div>
         </>
       ) : null}
@@ -455,11 +456,11 @@ const ChatInput = ({ setMessages }) => {
                   anchorEl={anchorEl}
                   // keepMounted
                   open={openMenu}
+                  variant="menu"
                   onClose={handleCloseMenu}
                   TransitionComponent={Fade}
-                  style={{ backgroundColor: "transparent" }}
                 >
-                  <MenuItem onClick={handleClickVideo}>
+                  <MenuItem onClick={handleClickVideo}   style={{ backgroundColor: "#020C24" }}>
                     <input
                       type="file"
                       ref={hiddenVideoInput}
@@ -515,12 +516,10 @@ const ChatInput = ({ setMessages }) => {
                           </g>
                         </svg>
                       </span>
-
-        
                     </IconButton>
                   </MenuItem>
 
-                  <MenuItem onClick={handleClickFile}>
+                  <MenuItem onClick={handleClickFile}  style={{ backgroundColor: "#020C24" }}>
                     <input
                       type="file"
                       ref={hiddenFileInput}
@@ -582,7 +581,7 @@ const ChatInput = ({ setMessages }) => {
                     </IconButton>
                   </MenuItem>
 
-                  <MenuItem>
+                  <MenuItem  style={{ backgroundColor: "#020C24" }}>
                     <IconButton
                       onClick={() => {
                         setShowImageUpload(true);
