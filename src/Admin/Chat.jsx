@@ -12,7 +12,7 @@ export default function Chat() {
   return (
     <div>
       <Hidden only="xs">
-        <div style={{ display: "flex", height: "86.5vh", width: "100vw" }}>
+        <div style={{ display: "flex", height: "91.7vh", width: "100vw" }}>
           <ChatContextProvider>
             <Contacts />
             <Main />

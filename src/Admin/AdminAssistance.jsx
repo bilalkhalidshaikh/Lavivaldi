@@ -98,11 +98,8 @@ function FullScreenDialog() {
 
 export default function AdminAssistance() {
   return (
-    <div>
+    <div style={{overflow:"hidden"}}>
       <Admin />
-      {/* <Chat/> */}
-      {/* <FullScreenDialog/> */}
-      <hr/>
       <Chat/>
     </div>
 
