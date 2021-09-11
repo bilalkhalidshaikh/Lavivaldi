@@ -13,7 +13,10 @@ import SendIcon from "@material-ui/icons/Send";
 //importing styles
 import "../../Styles/DrawerBottomDoc.css";
 import { FaFilePdf, FaFileArchive, FaFileWord } from "react-icons/fa";
-import Doc from "../../Images/doc.gif"
+import Doc from "../../Images/doc.gif";
+import { Hidden } from "@material-ui/core";
+import { Document, Page } from "react-pdf";
+import example from "../../Images/example.pdf";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
       top: 65,
     },
     [theme.breakpoints.up("lg")]: {
-      top: -5,
+      top: 0,
     },
   },
 }));
@@ -65,69 +68,10 @@ function DrawerBottom({
   fileDocType,
 }) {
   const classes = useStyles();
-  // const [{ user }] = useStateValue();
   const [caption, setCaption] = useState("");
   const { roomId } = useParams();
 
   const handleUpload = (e) => {
-    // if (fileImageUrl) {
-    //   db.collection("rooms")
-    //     .doc(roomId)
-    //     .collection("messages")
-    //     .add({
-    //       photo: fileImageUrl,
-    //       // name: user.displayName,
-    //       // uid: user.uid,
-    //       caption: caption,
-    //       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //     })
-    //     .then(function (docRef) {
-    //       // console.log("Document written with ID: ", docRef.id);
-    //       db.collection("rooms")
-    //         .doc(roomId)
-    //         .collection("messages")
-    //         .doc(docRef.id)
-    //         .set(
-    //           {
-    //             id: docRef.id,
-    //           },
-    //           { merge: true }
-    //         );
-    //     })
-    //     .catch(function (error) {
-    //       console.error("Error adding document: ", error);
-    //     });
-    //   setFileImageUrl(null);
-    // }
-    // if (fileVideoUrl) {
-    //   db.collection("rooms")
-    //     .doc(roomId)
-    //     .collection("messages")
-    //     .add({
-    //       video: fileVideoUrl,
-    //       // name: user.displayName,
-    //       // uid: user.uid,
-    //       caption: caption,
-    //       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //     })
-    //     .then(function (docRef) {
-    //       // console.log("Document written with ID: ", docRef.id);
-    //       db.collection("rooms")
-    //         .doc(roomId)
-    //         .collection("messages")
-    //         .doc(docRef.id)
-    //         .set(
-    //           {
-    //             id: docRef.id,
-    //           },
-    //           { merge: true }
-    //         );
-    //     })
-    //     .catch(function (error) {
-    //       console.error("Error adding document: ", error);
-    //     });
-    //   setFileVideoUrl(null);
-    // }
     setCaption("");
     setDrawerBottom(false);
   };
@@ -136,6 +80,12 @@ function DrawerBottom({
     setDrawerBottom(false);
   };
 
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
   return (
     <div>
       <Drawer
@@ -152,57 +102,98 @@ function DrawerBottom({
             <IconButton onClick={handleDrawerClose}>
               <CloseIcon />
             </IconButton>
-            <p>Preview</p>
+            <p>{fileDocName}</p>
           </div>
         </div>
 
         <div className="drawerBottom__content">
           <div className="drawerBottom__content_photo">
-            {fileDocUrl  ? null : (
+            {fileDocType ? (
               <div className="drawerBottom__content_video">
                 <div className="player-wrapper">
-                  {/* {fileDocType.match(".pdf,application/pdf") ? (
-                    <IconButton className="thumbnail">
+                  {fileDocType.match("application/pdf") ? (
+                    <>
+                      {/* <IconButton className="thumbnail">
                       <a href={fileDocUrl} download>
-                        {" "}
                         <img src="https://img.icons8.com/ios-filled/250/000000/pdf--v2.png" />
                         <p>{fileDocName}</p>
                       </a>
-                    </IconButton>
+                    </IconButton> */}
+                      <div style={{ marginLeft: "23em" }}>
+                        <Document
+                          file={fileDocUrl}
+                          onLoadSuccess={onDocumentLoadSuccess}
+                        >
+                          <Page pageNumber={pageNumber} height={400} />
+                        </Document>
+                        <p>
+                          Page {pageNumber} of {numPages}
+                        </p>
+                      </div>
+                      <Hidden only="lg">
+                        <IconButton className="thumbnail-mobile">
+                          <a href={fileDocUrl} download>
+                            <img src="https://img.icons8.com/ios-filled/250/000000/pdf--v2.png" />
+                            <p>{fileDocName}</p>
+                          </a>
+                        </IconButton>
+                      </Hidden>
+                    </>
                   ) : null}
-                  {fileDocType.match(".rar,zip,application/rar,application/zip") ? (
-                    <IconButton className="thumbnail">
-                      <a href={fileDocUrl} download>
-                        {" "}
-                        <img src="https://img.icons8.com/glyph-neue/250/000000/zip.png"/>
-                        <p>{fileDocName}</p>
-                      </a>
-                    </IconButton>
-                  ) : null}
-                  {fileDocType.match(".docx,docx,application/msword") ? (
-                    <IconButton className="thumbnail">
-                      <a href={fileDocUrl} download>
-                        {" "}
-                        <img src="https://img.icons8.com/ios-filled/250/000000/word.png"/>
-                        <p>{fileDocName}</p>
-                      </a>
-                    </IconButton>
-                  ) : null} */}
-
-
+                  {fileDocType.match("application/x-zip-compressed") ? (
+                    <>
                       <IconButton className="thumbnail">
+                        <a href={fileDocUrl} download>
+                          {" "}
+                          <img src="https://img.icons8.com/glyph-neue/250/000000/zip.png" />
+                          <p>{fileDocName}</p>
+                        </a>
+                      </IconButton>
+                      <Hidden only="lg">
+                        <IconButton className="thumbnail-mobile">
+                          <a href={fileDocUrl} download>
+                            {" "}
+                            <img src="https://img.icons8.com/glyph-neue/250/000000/zip.png" />
+                            <p>{fileDocName}</p>
+                          </a>
+                        </IconButton>
+                      </Hidden>
+                    </>
+                  ) : null}
+                  {fileDocType.match("application/msword") ? (
+                    <>
+                      <IconButton className="thumbnail">
+                        <a href={fileDocUrl} download>
+                          {" "}
+                          <img src="https://img.icons8.com/ios-filled/250/000000/word.png" />
+                          <p>{fileDocName}</p>
+                        </a>
+                      </IconButton>
+                      <Hidden only="lg">
+                        <IconButton className="thumbnail-mobile">
+                          <a href={fileDocUrl} download>
+                            {" "}
+                            <img src="https://img.icons8.com/ios-filled/250/000000/word.png" />
+                            <p>{fileDocName}</p>
+                          </a>
+                        </IconButton>
+                      </Hidden>
+                    </>
+                  ) : null}
+
+                  {/* <IconButton className="thumbnail">
                       <a href={fileDocUrl} download>
                         {" "}
                         <img src={"https://img.icons8.com/ios-filled/250/000000/document--v2.png"}/>
                         <p>{fileDocName}</p>
                       </a>
-                    </IconButton>
-                    <IconButton onClick={()=>{setDrawerBottom(false)}}>
+                    </IconButton> */}
+                  {/* <IconButton onClick={()=>{setDrawerBottom(false)}}>
                     <img src="https://img.icons8.com/ios-filled/100/000000/add--v2.png"/>
-                    </IconButton>
+                    </IconButton> */}
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
           <div className="drawerBottom__content_caption">
             <input
@@ -224,9 +215,9 @@ function DrawerBottom({
           </div>
         </div>
 
-        {/* <div className="drawerBottom__footer">
-          <div>{fileImageUrl ? <img src={fileImageUrl} alt="" /> : null}</div>
-        </div> */}
+        <div className="drawerBottom__footer">
+          <div>{fileImageUrl ? null : null}</div>
+        </div>
       </Drawer>
     </div>
   );

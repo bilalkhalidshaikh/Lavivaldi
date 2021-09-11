@@ -1,14 +1,18 @@
 .drawerBottom__header {
     background-color: #020C24;
+    padding: 0% !important;
+    text-align: center !important;
   }
   .drawerBottom__header_container {
     display: flex;
     align-items: center;
+    text-align: center !important;
   }
   .drawerBottom__header_container > p {
     color: white;
     font-size: 24px;
     font-weight: 500;
+    text-align: center !important;
     
   }
   .drawerBottom__header_container > .MuiIconButton-root {
@@ -17,7 +21,7 @@
   }
   .drawerBottom__content {
     background-color: #e6e6e6;
-    height: 120%;
+    height: 140%;
   }
   .drawerBottom__content_photo {
     width: 100%;
@@ -27,15 +31,32 @@
     max-height: 1000px;
   }
   .drawerBottom__content_video {
-    height: 400px;
+    height: 800px;
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
+
 .thumbnail{
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 11.5em !important;
+  align-items: center;
+  justify-content: center;
+}
+.thumbnail-mobile{
+  margin-left: auto !important;
+  margin-right: auto !important;
+  align-items: center;
+  justify-content: center;
 }
   .drawerBottom__content_video > .player-wrapper {
     margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   .drawerBottom__content_photo > img {
     height: 500px;

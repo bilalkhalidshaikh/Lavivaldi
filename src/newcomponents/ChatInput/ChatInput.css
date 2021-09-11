@@ -35,10 +35,10 @@
 
 .chatinput__form {
   flex: 1; 
-  padding: 10px;
+  padding: 8px;
   display: flex;
   align-items: center;
- background-color: white;
+ background-color: transparent;
   color: #ccc;
   border-radius: 50px;
 }

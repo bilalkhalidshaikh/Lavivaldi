@@ -579,7 +579,7 @@ const ChatInput = ({
         // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
         // await fileRef.put(file);
         setFileVideoUrl(URL.createObjectURL(videofilehref));
-        console.log("uploading video", fileVideoUrl);
+        console.log("uploading video", fileVideoUrl , "Type " ,videofilehref.type);
       }
       setDrawerVideoBottom(true);
     }
@@ -588,44 +588,66 @@ const ChatInput = ({
     const fileSizeToastId = "fileSizeToastId";
     const docfilehref = e.target.files[0];
     {
-      if (docfilehref.type.match(".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf")) {
+      // if (
+      //   docfilehref.type.match(
+      //     ".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf"
+      //   )
+      // )
+       {
         // const videosRef = storageRef.child(`rooms/${roomName}/videos`);
         // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
         // await fileRef.put(file);
-        setFileDocUrl(URL.createObjectURL(docfilehref));
-        setfileDocName(docfilehref.name)
-        setfileDocType(docfilehref.type)
-        console.log("uploading video", fileDocUrl);
+        await setFileDocUrl(URL.createObjectURL(docfilehref));
+        await setfileDocName(docfilehref.name);
+        await setfileDocType(docfilehref.type);
+        console.log("uploading Doc", fileDocUrl,"Type :" ,fileDocType);
       }
       setDrawerDocBottom(true);
     }
   };
 
-
   const attachFileLists = [
     {
       title: "Room 'Available Soon'",
-      icon: <VideoCallIcon  color="#fff" style={{color:"#fff"}} />,
+      icon: <VideoCallIcon color="#fff" style={{ color: "#fff" }} />,
       id: Math.random() * 100000,
     },
     {
       title: "Contact   'Available Soon'",
-      icon: <PersonIcon style={{color:"#fff"}} color="#fff"  />,
+      icon: <PersonIcon style={{ color: "#fff" }} color="#fff" />,
       id: Math.random() * 100000,
     },
     {
       title: "Document",
-      icon: <InsertDriveFileIcon onClick={handleClickFile} style={{color:"#fff"}} color="#fff " />,
+      icon: (
+        <InsertDriveFileIcon
+          onClick={handleClickFile}
+          style={{ color: "#fff" }}
+          color="#fff "
+        />
+      ),
       id: Math.random() * 100000,
     },
     {
       title: "Photos",
-      icon: <CameraAltIcon  onClick={handleClickImage} style={{color:"#fff"}} color="#fff" />,
+      icon: (
+        <CameraAltIcon
+          onClick={handleClickImage}
+          style={{ color: "#fff" }}
+          color="#fff"
+        />
+      ),
       id: Math.random() * 100000,
     },
     {
       title: "Videos",
-      icon: <PhotoIcon onClick={handleClickVideo} style={{color:"#fff", }} color="#fff" />,
+      icon: (
+        <PhotoIcon
+          onClick={handleClickVideo}
+          style={{ color: "#fff" }}
+          color="#fff"
+        />
+      ),
       id: Math.random() * 100000,
     },
   ];
@@ -655,12 +677,12 @@ const ChatInput = ({
         storage={storage}
       />
       <DrawerBottomDoc
-      drawerBottom={drawerDocBottom}
-      setDrawerBottom={setDrawerDocBottom}
-      fileImageUrl={fileImageUrl}
-      fileDocUrl={fileDocUrl}
-      fileDocName={fileDocName}
-      fileDocType={fileDocType}
+        drawerBottom={drawerDocBottom}
+        setDrawerBottom={setDrawerDocBottom}
+        fileImageUrl={fileImageUrl}
+        fileDocUrl={fileDocUrl}
+        fileDocName={fileDocName}
+        fileDocType={fileDocType}
       />
 
       {showFIleBar ? (
@@ -866,7 +888,22 @@ const ChatInput = ({
                   <div>
                     <TooltipCustom
                       name="Attach"
-                      icon={<AttachFileIcon />}
+                      icon={
+                        <>
+                          {" "}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="34"
+                            height="34"
+                          >
+                            <path
+                                fill="#020C24"
+                              d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"
+                            ></path>
+                          </svg>
+                        </>
+                      }
                       onClick={attachFile}
                     />
                     {showAttachFile ? (
@@ -893,10 +930,15 @@ const ChatInput = ({
                                 }
                                 placement="left"
                               >
-                                <Fab color="#020C24" style={{background:"#020C24"}} variant="circular" aria-label="person">
+                                <Fab
+                                  color="#020C24"
+                                  style={{ background: "#020C24" }}
+                                  variant="circular"
+                                  aria-label="person"
+                                >
                                   <div className="chat__icon">
                                     {/* <label htmlFor="file-input"> */}
-                                      {attachFileList.icon}
+                                    {attachFileList.icon}
                                     {/* </label> */}
                                     <input
                                       id="file-input"
@@ -919,8 +961,7 @@ const ChatInput = ({
                                       type="file"
                                       onChange={onDocFileChange}
                                       accept=".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf"
-                                      multiple
-                                      ref={hiddenFileInput}
+                                       ref={hiddenFileInput}
                                     />
                                   </div>
                                 </Fab>
@@ -1181,11 +1222,22 @@ const ChatInput = ({
               </div>
               <div className="chatinput__icons btn-mic show-count">
                 <IconButton
-                  color="#000"
+                  // color="#000"
                   onClick={startRecording}
-                  style={{ width: 20, height: 20, color: "#000" }}
+                  // style={{ width: 20, height: 20, color: "#000" }}
                 >
-                  <MicNoneOutlinedIcon fontSize="small" color="#000" />
+                    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="34"
+      height="34"
+      
+    >
+      <path
+        fill="#020C24"
+        d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"
+      ></path>
+    </svg>
                 </IconButton>
               </div>
             </div>
