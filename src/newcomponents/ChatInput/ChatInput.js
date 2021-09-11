@@ -47,11 +47,66 @@ import ImageUploading from "react-images-uploading";
 import ModalVideo from "react-modal-video";
 import Icon from "../Icon";
 import Player from "griffith";
-import { Upload } from "antd";
+import { Upload, Form } from "antd";
 import ImgCrop from "antd-img-crop";
 import FileViewer from "react-file-viewer";
 import { CustomErrorComponent } from "custom-error";
 import CloseIcon from "@material-ui/icons/Close";
+import DocViewer from "react-doc-viewer";
+import { Modal } from "react-bootstrap";
+import {
+  FaRegFilePdf,
+  FaFileArchive,
+  FaFileWord,
+  FaFileImage,
+  FaVideo,
+  FaFilePdf,
+  FaImage,
+} from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useStateValue } from "../../StateProvider";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fab from "@material-ui/core/Fab";
+import Slide from "@material-ui/core/Slide";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import DrawerBottom from "../DrawerBottom/DrawerBottom";
+import DrawerBottomDoc from "../DrawerBottom/DrawerBottomDoc";
+import DrawerBottomVideo from "../DrawerBottom/DrawerBottomVideo";
+import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import PhotoIcon from "@material-ui/icons/Photo";
+import VideoCallIcon from "@material-ui/icons/VideoCall";
+import PersonIcon from "@material-ui/icons/Person";
+
+const toastInfo = (toastTitle, toastId, position) => {
+  toast.info(toastTitle, {
+    toastId: toastId,
+    position: position,
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
+function TooltipCustom({ name, icon, onClick }) {
+  return (
+    <div>
+      <Tooltip
+        title={
+          <span style={{ fontSize: "14px", padding: "8px 5px 8px 5px" }}>
+            {name}
+          </span>
+        }
+        placement="bottom-end"
+      >
+        <IconButton onClick={onClick}>{icon}</IconButton>
+      </Tooltip>
+    </div>
+  );
+}
 
 const attachButtons = [
   { icon: "attachRooms", label: "Choose room" },
@@ -123,7 +178,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChatInput = ({ setMessages }) => {
+const ChatInput = ({
+  setMessages,
+  roomName,
+  roomId,
+  db,
+  firebase,
+  storage,
+}) => {
   const { selectedChat } = useContext(ChatContext);
   const [message, setMessage] = useState("");
   const [showPicker, setShowPicker] = useState(false);
@@ -249,18 +311,60 @@ const ChatInput = ({ setMessages }) => {
   };
 
   const [showImageUpload, setShowImageUpload] = useState(false);
-
+  const [show, setShow] = useState(false);
+  const [showDoc, setShowDoc] = useState(false);
+  const [showImg, setShowImg] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
+  const [anchorElBar, setAnchorElBar] = React.useState(null);
+  const openMenuBar = Boolean(anchorElBar);
   const [showFIleBar, setShowFIleBar] = useState(false);
+
+  const [fileImageUrl, setFileImageUrl] = useState(null);
+  const [fileVideoUrl, setFileVideoUrl] = useState(null);
+  const [fileDocUrl, setFileDocUrl] = useState(null);
+  const [fileDocName, setfileDocName] = useState(null);
+  const [fileDocType, setfileDocType] = useState(null);
+  const [showAttachFile, setShowAttachFile] = useState(false);
+  const [drawerBottom, setDrawerBottom] = useState(false);
+  const [drawerVideoBottom, setDrawerVideoBottom] = useState(false);
+  const [drawerDocBottom, setDrawerDocBottom] = useState(false);
+
+  const attachFile = () => {
+    const attachToastId = "attach";
+    toastInfo(
+      "All icons have the same functions, you can only upload images, gifs and videos!",
+      attachToastId,
+      "top-center"
+    );
+    if (showAttachFile === false) {
+      setShowAttachFile(true);
+    } else {
+      setShowAttachFile(false);
+    }
+    // console.log("attachFile click", attachToastId);
+  };
+
+  const handleCloseBarModal = () => setShow(false);
+  const handleCloseDocBarModal = () => setShowDoc(false);
+  const handleCloseImgBarModal = () => setShowImg(false);
+  const handleShowBarModal = () => setShow(true);
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
-    setShowFIleBar(true);
+    // setShowFIleBar(true);
+  };
+  const handleClickMenuBar = (event) => {
+    setAnchorElBar(event.currentTarget);
+    // setShowFIleBar(true);
   };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+    // setShowFIleBar(false)
+  };
+  const handleCloseMenuBar = () => {
+    setAnchorElBar(null);
     // setShowFIleBar(false)
   };
 
@@ -276,9 +380,39 @@ const ChatInput = ({ setMessages }) => {
   // const [openVideoModal, setOpenVideoModal] = useState(false)
   const hiddenVideoInput = React.useRef(null);
   const hiddenFileInput = React.useRef(null);
+  const hiddenImageInput = React.useRef(null);
   const [videoURL, setVideoURL] = useState();
   const [fileURL, setFileURL] = useState();
+  const [imageURL, setImageURL] = useState();
   const [openVideoModal, setOpenVideoModal] = React.useState(false);
+  const [videoSelectedFile, setVideoSelectedFile] = useState({
+    fileLink: "",
+    fileType: "",
+  });
+  const [docSelectedFile, setDocSelectedFile] = useState({
+    fileLink: "",
+    fileType: "",
+  });
+  const [imageSelectedFile, setImageSelectedFile] = useState({
+    fileLink: "",
+    fileType: "",
+  });
+
+  const handleVideoFileChange = (e) => {
+    const videofile = e.target.files[0];
+    const videofilelink = URL.createObjectURL(videofile);
+    const updatedVideoState = {
+      fileLink: videofilelink,
+      fileType: videofile.type,
+    };
+    setVideoSelectedFile({ ...videoSelectedFile, ...updatedVideoState });
+    setShow(true);
+    setAnchorEl(null);
+    console.log(
+      `Video link ${videoSelectedFile.fileLink} and Type ${videoSelectedFile.fileType}`
+    );
+    handleClickMenuBar(0);
+  };
 
   const handleClickVideoOpen = () => {
     setOpenVideoModal(true);
@@ -291,23 +425,53 @@ const ChatInput = ({ setMessages }) => {
   const handleClickVideo = (event) => {
     hiddenVideoInput.current.click();
   };
+
   const handleChangeVideo = (event) => {
     const fileUploaded = event.target.files[0];
     const videoFileURL = URL.createObjectURL(fileUploaded);
+
     setVideoURL(videoFileURL);
     console.log(`Here is File   ${videoURL}`);
     setOpenVideoModal(true);
   };
   const handleClickFile = (event) => {
-    hiddenVideoInput.current.click();
+    hiddenFileInput.current.click();
   };
   const handleChangeFile = (event) => {
     const filefileUploaded = event.target.files[0];
     const docFileURL = URL.createObjectURL(filefileUploaded);
-    setFileURL(docFileURL);
-    console.log(`Here is File   ${fileURL}`);
-    setOpenFileModal(true);
+    const updateDocSelectedFile = {
+      fileLink: docFileURL,
+      fileType: filefileUploaded.type,
+    };
+    setDocSelectedFile({ ...docSelectedFile, ...updateDocSelectedFile });
+    setAnchorEl(null);
+    setShowDoc(true);
+    console.log(
+      `Doc link ${docSelectedFile.fileLink} and Type ${docSelectedFile.fileType}`
+    );
   };
+  const handleClickImage = (event) => {
+    hiddenImageInput.current.click();
+  };
+  const handleChangeImage = (event) => {
+    const imageUploaded = event.target.files[0];
+    const imageFileURL = URL.createObjectURL(imageUploaded);
+    const updateImageSelectedFile = {
+      fileLink: imageFileURL,
+      fileType: imageUploaded.type,
+    };
+    setAnchorEl(null);
+    setShowImg(true);
+    setImageSelectedFile({ ...imageSelectedFile, ...updateImageSelectedFile });
+    console.log(
+      `Image link ${imageSelectedFile.fileLink} and Type ${imageSelectedFile.fileType}`
+    );
+  };
+  const docs = [
+    { uri: fileURL },
+    { uri: fileURL }, // Local File
+  ];
 
   var playURL =
     videoURL === undefined
@@ -366,8 +530,139 @@ const ChatInput = ({ setMessages }) => {
     imgWindow.document.write(image.outerHTML);
   };
 
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+
+    if (Array.isArray(e)) {
+      return e;
+    }
+
+    return e && e.fileList;
+  };
+  const onImageFileChange = async (e) => {
+    const fileSizeToastId = "fileSizeToastId";
+    const file = e.target.files[0];
+    if (file.size > 12 * 1024 * 1024) {
+      toastInfo(
+        "File should not exceed more than 12MB",
+        fileSizeToastId,
+        "top-center"
+      );
+    } else {
+      // const storageRef = storage.ref();
+      if (file.type.match("image.*")) {
+        // const imagesRef = storageRef.child(`rooms/${roomName}/images/`);
+        // const fileRef = imagesRef.child(new Date().getTime() + " " + file.name);
+        // await fileRef.put(file);
+        setFileImageUrl(URL.createObjectURL(file));
+        console.log("uploading image", fileImageUrl);
+      } else if (file.type.match("video.*")) {
+        // const videosRef = storageRef.child(`rooms/${roomName}/videos`);
+        // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
+        // await fileRef.put(file);
+        setFileVideoUrl(URL.createObjectURL(file));
+        console.log("uploading video", fileVideoUrl);
+      }
+      setDrawerBottom(true);
+    }
+  };
+
+  const handleClickAway = () => {
+    setShowAttachFile(false);
+  };
+  const onVideoFileChange = async (e) => {
+    const fileSizeToastId = "fileSizeToastId";
+    const videofilehref = e.target.files[0];
+    {
+      if (videofilehref.type.match("video.*")) {
+        // const videosRef = storageRef.child(`rooms/${roomName}/videos`);
+        // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
+        // await fileRef.put(file);
+        setFileVideoUrl(URL.createObjectURL(videofilehref));
+        console.log("uploading video", fileVideoUrl);
+      }
+      setDrawerVideoBottom(true);
+    }
+  };
+  const onDocFileChange = async (e) => {
+    const fileSizeToastId = "fileSizeToastId";
+    const docfilehref = e.target.files[0];
+    {
+      if (docfilehref.type.match(".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf")) {
+        // const videosRef = storageRef.child(`rooms/${roomName}/videos`);
+        // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
+        // await fileRef.put(file);
+        setFileDocUrl(URL.createObjectURL(docfilehref));
+        setfileDocName(docfilehref.name)
+        setfileDocType(docfilehref.type)
+        console.log("uploading video", fileDocUrl);
+      }
+      setDrawerDocBottom(true);
+    }
+  };
+
+
+  const attachFileLists = [
+    {
+      title: "Room 'Available Soon'",
+      icon: <VideoCallIcon  color="#fff" style={{color:"#fff"}} />,
+      id: Math.random() * 100000,
+    },
+    {
+      title: "Contact   'Available Soon'",
+      icon: <PersonIcon style={{color:"#fff"}} color="#fff"  />,
+      id: Math.random() * 100000,
+    },
+    {
+      title: "Document",
+      icon: <InsertDriveFileIcon onClick={handleClickFile} style={{color:"#fff"}} color="#fff " />,
+      id: Math.random() * 100000,
+    },
+    {
+      title: "Photos",
+      icon: <CameraAltIcon  onClick={handleClickImage} style={{color:"#fff"}} color="#fff" />,
+      id: Math.random() * 100000,
+    },
+    {
+      title: "Videos",
+      icon: <PhotoIcon onClick={handleClickVideo} style={{color:"#fff", }} color="#fff" />,
+      id: Math.random() * 100000,
+    },
+  ];
+
   return (
     <div>
+      <DrawerBottom
+        drawerBottom={drawerBottom}
+        setDrawerBottom={setDrawerBottom}
+        fileVideoUrl={fileVideoUrl}
+        fileImageUrl={fileImageUrl}
+        setFileImageUrl={setFileImageUrl}
+        setFileVideoUrl={setFileVideoUrl}
+        roomId={roomId}
+        db={db}
+        firebase={firebase}
+        storage={storage}
+      />
+      <DrawerBottomVideo
+        drawerBottom={drawerVideoBottom}
+        setDrawerBottom={setDrawerVideoBottom}
+        fileVideoUrl={fileVideoUrl}
+        setFileVideoUrl={setFileVideoUrl}
+        roomId={roomId}
+        db={db}
+        firebase={firebase}
+        storage={storage}
+      />
+      <DrawerBottomDoc
+      drawerBottom={drawerDocBottom}
+      setDrawerBottom={setDrawerDocBottom}
+      fileImageUrl={fileImageUrl}
+      fileDocUrl={fileDocUrl}
+      fileDocName={fileDocName}
+      fileDocType={fileDocType}
+      />
+
       {showFIleBar ? (
         <>
           <div className="filebar">
@@ -382,9 +677,10 @@ const ChatInput = ({ setMessages }) => {
             >
               <CloseIcon />
             </IconButton>
-            <h6 style={{color:"#ccc"}}>   {videoURL === undefined ? "Please Select" : (
-             "Here is the Video"
-            )}</h6>
+            <h6 style={{ color: "#ccc" }}>
+              {" "}
+              {videoURL === undefined ? "Please Select" : "Here is the Video"}
+            </h6>
             {videoURL === undefined ? null : (
               <video src={videoURL} width={200} height={150} controls />
             )}
@@ -425,6 +721,125 @@ const ChatInput = ({ setMessages }) => {
       ) : (
         <>
           <div className="chatinput">
+            <Modal
+              show={show}
+              onHide={handleCloseBarModal}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Selected Files</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {videoSelectedFile.fileLink === "" ? null : (
+                  <span style={{ color: "#333", fontSize: "12pt" }}>
+                    Selected Vidoes <FaVideo /> <br />{" "}
+                    <video
+                      width={150}
+                      height={150}
+                      controls
+                      src={videoSelectedFile.fileLink}
+                    />
+                  </span>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseBarModal}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleCloseBarModal}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal
+              show={showDoc}
+              onHide={handleCloseDocBarModal}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              dialogClassName="modal-130w"
+              // style={{height:"200em"}}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Selected Files</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {docSelectedFile.fileLink === "" ? null : (
+                  <>
+                    {" "}
+                    <span style={{ color: "#333", fontSize: "12pt" }}>
+                      Selected File <FaFilePdf /> <br />
+                    </span>
+                  </>
+                )}
+                {
+                  (docSelectedFile.fileType = "application/pdf" ? (
+                    <a href={docSelectedFile.fileLink} download>
+                      {" "}
+                      <FaFilePdf />{" "}
+                    </a>
+                  ) : (
+                    <a href={docSelectedFile.fileLink} download>
+                      <FaFileArchive />
+                    </a>
+                  ))
+                }
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseDocBarModal}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleCloseDocBarModal}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal
+              show={showImg}
+              onHide={handleCloseImgBarModal}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Selected Files</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {imageSelectedFile.fileLink === "" ? null : (
+                  <>
+                    Selected Images <FaImage /> <br />{" "}
+                    <img
+                      src={imageSelectedFile.fileLink}
+                      width={150}
+                      height={150}
+                    />
+                    <img
+                      src={imageSelectedFile.fileLink}
+                      width={150}
+                      height={150}
+                    />
+                    <img
+                      src={imageSelectedFile.fileLink}
+                      width={150}
+                      height={150}
+                    />
+                  </>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseImgBarModal}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleCloseImgBarModal}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
             <div className="chatinput__form">
               {showPicker && <Picker onEmojiClick={addEmoji} />}
               <SentimentVerySatisfiedIcon onClick={togglePicker} />
@@ -440,37 +855,121 @@ const ChatInput = ({ setMessages }) => {
               </form>
               <div className="chatinput__formIcons"></div>
               <div className="chatinput__icons">
-                {/* <span      onClick={()=>{setShowFIleBar(true)}}> */}
                 <IconButton
                   style={{ width: 40, height: 40, color: "black" }}
                   aria-controls="fade-menu"
                   aria-haspopup="true"
-                  onClick={handleClickMenu}
+                  // onClick={handleClickMenu}
                 >
-                  <AttachFileOutlinedIcon fontSize="small" color="black" />
-                </IconButton>
-                {/* </span> */}
+                  {/* <AttachFileOutlinedIcon fontSize="small" color="black" /> */}
 
+                  <div>
+                    <TooltipCustom
+                      name="Attach"
+                      icon={<AttachFileIcon />}
+                      onClick={attachFile}
+                    />
+                    {showAttachFile ? (
+                      <ClickAwayListener onClickAway={handleClickAway}>
+                        <div className="chat__attachFile">
+                          {attachFileLists.map((attachFileList) => (
+                            <Slide
+                              key={attachFileList.id}
+                              direction="up"
+                              in={attachFile}
+                              mountOnEnter
+                              unmountOnExit
+                            >
+                              <Tooltip
+                                title={
+                                  <span
+                                    style={{
+                                      fontSize: "14px",
+                                      padding: "8px 5px 8px 5px",
+                                    }}
+                                  >
+                                    {attachFileList.title}
+                                  </span>
+                                }
+                                placement="left"
+                              >
+                                <Fab color="#020C24" style={{background:"#020C24"}} variant="circular" aria-label="person">
+                                  <div className="chat__icon">
+                                    {/* <label htmlFor="file-input"> */}
+                                      {attachFileList.icon}
+                                    {/* </label> */}
+                                    <input
+                                      id="file-input"
+                                      type="file"
+                                      onChange={onImageFileChange}
+                                      accept="image/*"
+                                      multiple
+                                      ref={hiddenImageInput}
+                                    />
+                                    <input
+                                      id="file-input"
+                                      type="file"
+                                      onChange={onVideoFileChange}
+                                      accept="video/*"
+                                      multiple
+                                      ref={hiddenVideoInput}
+                                    />
+                                    <input
+                                      id="file-input"
+                                      type="file"
+                                      onChange={onDocFileChange}
+                                      accept=".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf"
+                                      multiple
+                                      ref={hiddenFileInput}
+                                    />
+                                  </div>
+                                </Fab>
+                              </Tooltip>
+                            </Slide>
+                          ))}
+                        </div>
+                      </ClickAwayListener>
+                    ) : null}
+                  </div>
+                </IconButton>
+                {/* 
                 <Menu
                   id="fade-menu"
                   anchorEl={anchorEl}
-                  // keepMounted
+                  style={{
+                    marginTop: "-60px",
+                    border: "none",
+                    outline: "none",
+                    marginLeft: "-20em",
+                  }}
                   open={openMenu}
                   variant="menu"
                   onClose={handleCloseMenu}
                   TransitionComponent={Fade}
+                  PaperProps={{
+                    style: {
+                      width: "48%",
+                      maxWidth: "48%",
+                      left: 0,
+                      right: 0,
+                    },
+                  }}
+                  anchorOrigin={{ vertical: "bottom" }}
+                  transformOrigin={{ vertical: "top" }}
                 >
-                  <MenuItem onClick={handleClickVideo}   style={{ backgroundColor: "#020C24" }}>
+                  <MenuItem
+                    onClick={handleClickVideo}
+                    style={{ backgroundColor: "#020C24" }}
+                  >
                     <input
                       type="file"
                       ref={hiddenVideoInput}
                       style={{ display: "none" }}
-                      onChange={handleChangeVideo}
+                      onChange={handleVideoFileChange}
                       multiple
+                      accept="video/*"
                     />
-                    <IconButton
-                    //  onClick={handleClickVideoOpen}
-                    >
+                    <IconButton>
                       <span
                         data-testid="attach-camera"
                         data-icon="attach-camera"
@@ -516,16 +1015,25 @@ const ChatInput = ({ setMessages }) => {
                           </g>
                         </svg>
                       </span>
+
+
+                      <span style={{ color: "#ccc", fontSize: "12pt" }}>
+                        Add Video
+                      </span>
                     </IconButton>
                   </MenuItem>
 
-                  <MenuItem onClick={handleClickFile}  style={{ backgroundColor: "#020C24" }}>
+                  <MenuItem
+                    onClick={handleClickFile}
+                    style={{ backgroundColor: "#020C24" }}
+                  >
                     <input
                       type="file"
                       ref={hiddenFileInput}
                       style={{ display: "none" }}
                       onChange={handleChangeFile}
                       multiple
+                      accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.rar,.zip"
                     />
                     <IconButton>
                       <svg
@@ -569,23 +1077,25 @@ const ChatInput = ({ setMessages }) => {
                           ></path>
                         </g>
                       </svg>
-
-                      {fileURL === undefined ? null : (
-                        <FileViewer
-                          fileType={"file"}
-                          filePath={fileURL}
-                          errorComponent={CustomErrorComponent}
-                          onError={onError}
-                        />
-                      )}
+                      <span style={{ color: "#ccc", fontSize: "12pt" }}>
+                        Add Document
+                      </span>
                     </IconButton>
                   </MenuItem>
 
-                  <MenuItem  style={{ backgroundColor: "#020C24" }}>
+                  <MenuItem
+                    style={{ backgroundColor: "#020C24" }}
+                    onClick={handleClickImage}
+                  >
+                    <input
+                      type="file"
+                      ref={hiddenImageInput}
+                      style={{ display: "none" }}
+                      onChange={handleChangeImage}
+                      multiple
+                      accept="image/*"
+                    />
                     <IconButton
-                      onClick={() => {
-                        setShowImageUpload(true);
-                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -629,86 +1139,45 @@ const ChatInput = ({ setMessages }) => {
                           ></path>
                         </g>
                       </svg>
+                      <span style={{ color: "#ccc", fontSize: "12pt" }}>
+                        Add Images
+                      </span>
                     </IconButton>
-                    <ImageUploading
-                      multiple
-                      value={images}
-                      onChange={onChangeImage}
-                      maxNumber={maxNumber}
-                      dataURLKey="data_url"
-                    >
-                      {({
-                        imageList,
-                        onImageUpload,
-                        onImageRemoveAll,
-                        onImageUpdate,
-                        onImageRemove,
-                        isDragging,
-                        dragProps,
-                      }) => (
-                        // write your building UI
-                        <div className="upload__image-wrapper">
-                          <button
-                            style={isDragging ? { color: "red" } : undefined}
-                            onClick={onImageUpload}
-                            {...dragProps}
-                          >
-                            Click or Drop here
-                          </button>
-                          &nbsp;
-                          <button onClick={onImageRemoveAll}>
-                            Remove all images
-                          </button>
-                          {imageList.map((image, index) => (
-                            <div key={index} className="image-item">
-                              <img src={image["data_url"]} alt="" width="100" />
-                              <div className="image-item__btn-wrapper">
-                                <button onClick={() => onImageUpdate(index)}>
-                                  Update
-                                </button>
-                                <button onClick={() => onImageRemove(index)}>
-                                  Remove
-                                </button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </ImageUploading>
+                 
                   </MenuItem>
                 </Menu>
+ */}
 
-                {/* .
-                <div className="pos-rel">
-                  <button
-                    aria-label="Attach"
-                    onClick={() => setShowAttach(!showAttach)}
-                  >
-                    <Icon
-                      id="attach"
-                      className={`chat__input-icon ${
-                        showAttach ? "chat__input-icon--pressed" : ""
-                      }`}
-                    />
-                  </button>
+                <Menu
+                  id="fade-menu"
+                  anchorEl={anchorElBar}
+                  style={{
+                    marginTop: "-60px",
+                    border: "none",
+                    outline: "none",
+                    marginLeft: "-20em",
+                  }}
+                  open={openMenuBar}
+                  variant="menu"
+                  onClose={handleCloseMenuBar}
+                  TransitionComponent={Fade}
+                  PaperProps={{
+                    style: {
+                      width: "48%",
+                      maxWidth: "48%",
+                      left: 0,
+                      right: 0,
+                    },
+                  }}
+                  anchorOrigin={{ vertical: "bottom" }}
+                  transformOrigin={{ vertical: "top" }}
+                >
+                  <MenuItem style={{ backgroundColor: "#020C24" }}></MenuItem>
 
-                  <div
-                    className={`chat__attach ${
-                      showAttach ? "chat__attach--active" : ""
-                    }`}
-                  >
-                    {attachButtons.map((btn) => (
-                      <button
-                        className="chat__attach-btn"
-                        aria-label={btn.label}
-                        key={btn.label}
-                      >
-                        <Icon id={btn.icon} className="chat__attach-icon" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-            */}
+                  <MenuItem style={{ backgroundColor: "#020C24" }}></MenuItem>
+
+                  <MenuItem style={{ backgroundColor: "#020C24" }}></MenuItem>
+                </Menu>
               </div>
               <div className="chatinput__icons btn-mic show-count">
                 <IconButton
@@ -720,9 +1189,6 @@ const ChatInput = ({ setMessages }) => {
                 </IconButton>
               </div>
             </div>
-            {/* <div className="chatinput__icons">
-          </div> */}
-
             {
               <Dialog
                 open={openModal}

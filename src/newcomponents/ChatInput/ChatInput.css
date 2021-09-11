@@ -101,9 +101,30 @@
 }
 
 
+.chat__attachFile {
+  position: absolute;
+  bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+}
+.chat__attachFile > .MuiFab-root {
+  margin: 7px 0 7px 0;
+}
 
-
-
+.chat__icon {
+  height: 24px;
+  background: transparent !important;
+}
+.chat__icon > label > .MuiSvgIcon-root {
+  cursor: pointer;
+  font-size: 28pt;
+  background-color: #020C24 !important;
+}
+.chat__icon > input {
+  display: none;
+}
 
 .chat__attach {
   display: flex;
@@ -153,7 +174,7 @@
 }
 
 .chat__input-icon {
-  color: #919191;
+  color: #ffffff;
   margin-left: 8px;
   margin-right: 8px;
   width: 28px;
