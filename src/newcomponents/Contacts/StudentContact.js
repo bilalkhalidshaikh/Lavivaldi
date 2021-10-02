@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
 import ContactCard from "../ContactCard/ContactCard";
 import "./Contacts.css";
-import Hidden from "@material-ui/core/Hidden"
+import Hidden from "@material-ui/core/Hidden";
 
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
@@ -23,7 +23,7 @@ const options = [
   "Sedna",
   "Titania",
   "Triton",
-  "Umbriel",
+  "Umbriel"
 ];
 
 const ITEM_HEIGHT = 48;
@@ -60,8 +60,8 @@ function LongMenu() {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
+            width: "20ch"
+          }
         }}
       >
         {options.map((option) => (
@@ -78,9 +78,6 @@ function LongMenu() {
   );
 }
 
-
-
-
 const Contacts = () => {
   const { chats: contacts } = useContext(ChatContext);
   return (
@@ -89,11 +86,11 @@ const Contacts = () => {
 
       <div className="contacts__heading">
         <h1 style={{ color: "#ccc" }}> Student </h1>
-        <LongMenu/>
+        <LongMenu />
       </div>
       {/* </Hidden> */}
       <div className="contacts__list">
-      <div></div>
+        <div></div>
         {contacts.map((contact) => (
           <ContactCard key={contact.id} contact={contact} />
         ))}

@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -39,7 +39,7 @@ const openNotification = () => {
     message: "We're Working on it",
     description:
       "ThisService is not Available right now soon we will update it...... Thanks.",
-    icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    icon: <SmileOutlined style={{ color: "#108ee9" }} />
   });
 };
 
@@ -48,7 +48,7 @@ export default function SignIn() {
   const [pass, setPass] = React.useState(null);
   console.log({
     email: email,
-    password: pass,
+    password: pass
   });
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -57,12 +57,14 @@ export default function SignIn() {
     // eslint-disable-next-line no-console
     console.log({
       email: email,
-      password: data.get("password"),
+      password: data.get("password")
     });
   };
 
   return (
-    <div   style={{ backgroundColor: "#020C24",overflow:"auto", height:"50em" }}>
+    <div
+      style={{ backgroundColor: "#020C24", overflow: "auto", height: "50em" }}
+    >
       <Container
         component="main"
         maxWidth="xs"
@@ -71,8 +73,8 @@ export default function SignIn() {
         <CssBaseline />
         <CssBaseline />
         <CssBaseline />
-        <br/>
-        <br/>
+        <br />
+        <br />
 
         <Hidden only="xs">
           <Box
@@ -81,7 +83,7 @@ export default function SignIn() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              color: "#ccc",
+              color: "#ccc"
             }}
           >
             <Image src={logo} />
@@ -114,7 +116,7 @@ export default function SignIn() {
                   borderBottom: "1px solid #ccc",
                   color: "#ccc",
                   paddingBottom: "10px",
-                  width: "25em",
+                  width: "25em"
                 }}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -130,7 +132,7 @@ export default function SignIn() {
                   border: "none",
                   borderBottom: "1px solid #ccc",
                   color: "#ccc",
-                  paddingBottom: "10px",
+                  paddingBottom: "10px"
                 }}
                 onChange={(e) => {
                   setPass(e.target.value);
@@ -156,24 +158,23 @@ export default function SignIn() {
                 style={{
                   backgroundColor: "rgba(196, 196, 196, 0.32)",
                   color: "#fff",
-                  border: "0.2px solid #ccc",
+                  border: "0.2px solid #ccc"
                 }}
                 onClick={openNotification}
               >
                 Accedi
               </Button>
-              <br/>
-                <br/>
+              <br />
+              <br />
               <Grid
                 container
                 style={{
                   color: "#ccc",
                   textAlign: "center",
                   marginLeft: "auto",
-                  marginRight: "auto",
+                  marginRight: "auto"
                 }}
               >
-                
                 <Grid item xs>
                   <Link
                     href="#"
@@ -182,7 +183,7 @@ export default function SignIn() {
                       color: "#ccc",
                       textAlign: "center",
                       marginLeft: "auto",
-                      marginRight: "auto",
+                      marginRight: "auto"
                     }}
                   >
                     Recupera password
@@ -200,7 +201,7 @@ export default function SignIn() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              color: "#ccc",
+              color: "#ccc"
             }}
           >
             <Image src={logo} />
@@ -232,7 +233,7 @@ export default function SignIn() {
                   borderBottom: "1px solid #ccc",
                   color: "#ccc",
                   paddingBottom: "10px",
-                  width: "15em",
+                  width: "15em"
                 }}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -248,7 +249,7 @@ export default function SignIn() {
                   border: "none",
                   borderBottom: "1px solid #ccc",
                   color: "#ccc",
-                  paddingBottom: "10px",
+                  paddingBottom: "10px"
                 }}
                 onChange={(e) => {
                   setPass(e.target.value);
@@ -274,23 +275,21 @@ export default function SignIn() {
                 style={{
                   backgroundColor: "rgba(196, 196, 196, 0.32)",
                   color: "#fff",
-                  border: "0.2px solid #ccc",
+                  border: "0.2px solid #ccc"
                 }}
                 onClick={openNotification}
               >
-                <Link to="/Admin">
-                Accedi
-                </Link>
+                <Link to="/Admin">Accedi</Link>
               </Button>
-              <br/>
-              <br/>
+              <br />
+              <br />
               <Grid
                 container
                 style={{
                   color: "#ccc",
                   textAlign: "center",
                   marginLeft: "auto",
-                  marginRight: "auto",
+                  marginRight: "auto"
                 }}
               >
                 <Grid item xs>
@@ -302,10 +301,10 @@ export default function SignIn() {
             </Box>
           </Box>
         </Hidden>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+        <br />
+        <br />
+        <br />
+        <br />
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </div>

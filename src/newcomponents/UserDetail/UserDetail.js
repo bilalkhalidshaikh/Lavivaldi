@@ -15,18 +15,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import "react-pro-sidebar/dist/css/styles.css";
 import { ChatContext } from "../../contexts/ChatContext";
 import Grid from "@material-ui/core/Grid";
-import { UserOutlined } from '@ant-design/icons';
-
+import { UserOutlined } from "@ant-design/icons";
 
 const useStylesGrid = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
+    color: theme.palette.text.secondary
+  }
 }));
 
 function FullWidthGrid() {
@@ -94,14 +93,14 @@ function FullWidthGridTwo() {
 
 const useStylesChip = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    color: "#ccc",
-    flexWrap: "wrap",
+    "display": "flex",
+    "justifyContent": "center",
+    "color": "#ccc",
+    "flexWrap": "wrap",
     "& > *": {
-      margin: theme.spacing(0.5),
-    },
-  },
+      margin: theme.spacing(0.5)
+    }
+  }
 }));
 
 function OutlinedChips() {
@@ -194,14 +193,14 @@ function OutlinedChips() {
 
 const useStylesPaper = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
+    "display": "flex",
+    "flexWrap": "wrap",
     "& > *": {
       margin: theme.spacing(1),
       width: theme.spacing(16),
-      height: theme.spacing(16),
-    },
-  },
+      height: theme.spacing(16)
+    }
+  }
 }));
 
 function SimplePaper() {
@@ -223,26 +222,26 @@ const useStylesCard = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#020C24",
-    color: "#ccc",
+    color: "#ccc"
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)",
+    transform: "scale(0.8)"
   },
   title: {
     fontSize: "44px",
-    color: "#ccc",
+    color: "#ccc"
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 12
   },
   avatar: {
     width: 100,
     height: 100,
     marginLeft: "auto",
-    marginRight: "auto",
-  },
+    marginRight: "auto"
+  }
 });
 
 const { TabPane } = Tabs;
@@ -262,7 +261,7 @@ const Demo = () => (
       marginRight: "auto",
       textAlign: "center",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "center"
     }}
   >
     <TabPane tab="Media" key="1">
@@ -288,7 +287,9 @@ function SimpleCard({ name }) {
         >
           {!name ? <h1 className={classes.title}>Name</h1> : name.name}
         </Typography>
-        <Avatar className={classes.avatar}><UserOutlined/></Avatar>
+        <Avatar className={classes.avatar}>
+          <UserOutlined />
+        </Avatar>
         <br />
         <Demo />
       </CardContent>

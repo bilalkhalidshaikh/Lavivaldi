@@ -3,7 +3,6 @@ import Chat from "../Chat/Chat";
 import { useContext } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
 
-
 const Main = () => {
   const { selectedChat } = useContext(ChatContext);
   return !selectedChat ? (

@@ -4,8 +4,8 @@ const useRecorder = () => {
   const [audioURL, setAudioURL] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [recorder, setRecorder] = useState(null);
-  const [counter,setCounter] = useState(0);
- 
+  const [counter, setCounter] = useState(0);
+
   useEffect(() => {
     // Lazily obtain recorder first time we're recording.
     if (recorder === null) {
@@ -23,7 +23,7 @@ const useRecorder = () => {
     }
 
     // Obtain the audio when ready.
-    const handleData = e => {
+    const handleData = (e) => {
       setAudioURL(URL.createObjectURL(e.data));
     };
 
@@ -31,18 +31,17 @@ const useRecorder = () => {
     return () => recorder.removeEventListener("dataavailable", handleData);
   }, [recorder, isRecording]);
 
-  const startRecording = async() => {
-    
+  const startRecording = async () => {
     setIsRecording(true);
   };
 
   const stopRecording = () => {
     setIsRecording(false);
-    setAudioURL(null)
-    setCounter(0)
+    setAudioURL(null);
+    setCounter(0);
   };
 
-  return [audioURL, isRecording, startRecording, stopRecording,counter];
+  return [audioURL, isRecording, startRecording, stopRecording, counter];
 };
 
 async function requestRecorder() {
