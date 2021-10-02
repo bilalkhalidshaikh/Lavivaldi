@@ -30,35 +30,35 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0,
-    },
+      flexShrink: 0
+    }
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
+      marginLeft: drawerWidth
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-  },
+    padding: theme.spacing(3)
+  }
 }));
 
 function ResponsiveDrawer(props) {
@@ -131,10 +131,10 @@ function ResponsiveDrawer(props) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}
           >
             {drawer}
@@ -143,7 +143,7 @@ function ResponsiveDrawer(props) {
         <Hidden xsDown implementation="css">
           <Drawer
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             variant="permanent"
             open
@@ -193,7 +193,7 @@ ResponsiveDrawer.propTypes = {
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window: PropTypes.func,
+  window: PropTypes.func
 };
 
 // Drawer
@@ -233,7 +233,7 @@ class CommentContainer extends React.Component {
   state = {
     comments: [],
     submitting: false,
-    value: "",
+    value: ""
   };
 
   handleSubmit = () => {
@@ -242,7 +242,7 @@ class CommentContainer extends React.Component {
     }
 
     this.setState({
-      submitting: true,
+      submitting: true
     });
 
     setTimeout(() => {
@@ -256,16 +256,16 @@ class CommentContainer extends React.Component {
             avatar:
               "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
             content: <p>{this.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-        ],
+            datetime: moment().fromNow()
+          }
+        ]
       });
     }, 1000);
   };
 
   handleChange = (e) => {
     this.setState({
-      value: e.target.value,
+      value: e.target.value
     });
   };
 
@@ -304,17 +304,22 @@ export default function AdminNotification() {
         <Layout>
           <Layout>
             <Sider style={{ backgroundColor: "#020C24" }}>
-              <Card hoverable style={{ width: 200, height: 635 , backgroundColor: "#020C24",color:"#ccc" }}>
-          
+              <Card
+                hoverable
+                style={{
+                  width: 200,
+                  height: 635,
+                  backgroundColor: "#020C24",
+                  color: "#ccc"
+                }}
+              >
                 <h3 style={{ color: "#ccc" }}>Filter</h3>
-             
               </Card>
             </Sider>
             <Content>
               <CommentContainer />
             </Content>
           </Layout>
-
         </Layout>
       </Hidden>
       <Hidden only="lg">
@@ -325,7 +330,7 @@ export default function AdminNotification() {
             width: 350,
             height: 200,
             backgroundColor: "#020C24",
-            color: "#ccc",
+            color: "#ccc"
           }}
         >
           <h3 style={{ color: "#ccc" }}>Filter</h3>

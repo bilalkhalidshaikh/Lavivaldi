@@ -1,43 +1,42 @@
 import React from "react";
 import Admin from "./Admin";
 import { Empty, Button } from "antd";
-import { makeStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import CancelIcon from '@material-ui/icons/Cancel';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
-import Chat from "./Chat"
-import Student from "./StudentChat"
-import Teacher from "./TeacherChat"
-
+import { makeStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import CancelIcon from "@material-ui/icons/Cancel";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
+import Chat from "./Chat";
+import Student from "./StudentChat";
+import Teacher from "./TeacherChat";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: 'relative',
-    backgroundColor:"#020C24"
+    position: "relative",
+    backgroundColor: "#020C24"
   },
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
-    color:"#ccc",
-    alignItems:"center",
-    justifyContent:"center"
+    color: "#ccc",
+    alignItems: "center",
+    justifyContent: "center"
   },
-  button :{
+  button: {
     flex: 1,
-    alignItems:"center !important",
-    color:"#333",
-    width:"10em",
-    height:"5em",
-    color:"#ccc",
-    fontSize:"14px",
-    marginLeft:"45em",
-    backgroundColor:"#020C24"
-  },
+    alignItems: "center !important",
+    color: "#333",
+    width: "10em",
+    height: "5em",
+    color: "#ccc",
+    fontSize: "14px",
+    marginLeft: "45em",
+    backgroundColor: "#020C24"
+  }
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -59,16 +58,25 @@ function TeacherChat() {
   return (
     <div>
       {/* <Typography variant="h1" component="h1" */}
-      <br/>
+      <br />
       <Button onClick={handleClickOpen} type="primary">
-    
-      Chat with Teacher
+        Chat with Teacher
       </Button>
-            {/* </Typography> */}
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      {/* </Typography> */}
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -76,12 +84,12 @@ function TeacherChat() {
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               {/* <Link to={`/AdminContact`}> */}
-              <CancelIcon/>
+              <CancelIcon />
               {/* </Link> */}
             </Button>
           </Toolbar>
         </AppBar>
-      <Teacher/>
+        <Teacher />
       </Dialog>
     </div>
   );
@@ -101,16 +109,25 @@ function StudentChat() {
   return (
     <div>
       {/* <Typography variant="h1" component="h1" */}
-      <br/>
+      <br />
       <Button onClick={handleClickOpen} type="primary">
-    
-      Chat with Student
+        Chat with Student
       </Button>
-            {/* </Typography> */}
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      {/* </Typography> */}
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -118,19 +135,16 @@ function StudentChat() {
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               {/* <Link to={`/AdminContact`}> */}
-              <CancelIcon/>
+              <CancelIcon />
               {/* </Link> */}
             </Button>
           </Toolbar>
         </AppBar>
-      <Student/>
+        <Student />
       </Dialog>
     </div>
   );
 }
-
-
-
 
 export default function AdminDashboard() {
   return (
@@ -139,7 +153,7 @@ export default function AdminDashboard() {
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
         imageStyle={{
-          height: 60,
+          height: 60
         }}
         description={
           <span>
@@ -147,8 +161,8 @@ export default function AdminDashboard() {
           </span>
         }
       >
-      <TeacherChat/>
-        <StudentChat/>
+        <TeacherChat />
+        <StudentChat />
       </Empty>
     </div>
   );

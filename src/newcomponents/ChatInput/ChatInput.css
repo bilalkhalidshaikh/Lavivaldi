@@ -11,7 +11,7 @@
   border-radius: 10px;
 }
 
-.voicebar{
+.voicebar {
   padding: -5px 10px;
   display: flex;
   align-items: center;
@@ -27,18 +27,18 @@
   /* border: 1px solid #333; */
   border-radius: 10px;
 }
-.filebar{
-    width: 100%;      
-    background-color: rgba(255, 0, 0, 1);
-    color: #ccc;
+.filebar {
+  width: 100%;
+  background-color: rgba(255, 0, 0, 1);
+  color: #ccc;
 }
 
 .chatinput__form {
-  flex: 1; 
+  flex: 1;
   padding: 8px;
   display: flex;
   align-items: center;
- background-color: transparent;
+  background-color: transparent;
   color: #ccc;
   border-radius: 50px;
 }
@@ -94,12 +94,10 @@
   left: 10%;
 }
 
-
-.fa-paper-plane{
+.fa-paper-plane {
   color: white !important;
   font-size: 22pt !important;
 }
-
 
 .chat__attachFile {
   position: absolute;
@@ -120,7 +118,7 @@
 .chat__icon > label > .MuiSvgIcon-root {
   cursor: pointer;
   font-size: 28pt;
-  background-color: #020C24 !important;
+  background-color: #020c24 !important;
 }
 .chat__icon > input {
   display: none;
@@ -167,7 +165,6 @@
 .chat__attach-btn {
   margin-bottom: 10px;
 }
-
 
 .chat__input-icon--pressed {
   background: rgba(0, 0, 0, 0.1);
