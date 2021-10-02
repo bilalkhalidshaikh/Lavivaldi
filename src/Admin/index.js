@@ -9,5 +9,5 @@ export {
   Admin,
   AdminAssestance,
   AdminDashboard,
-  AdminNotification,
+  AdminNotification
 };

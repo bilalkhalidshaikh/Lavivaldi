@@ -6,7 +6,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Avatar } from "@material-ui/core";
 import { useContext } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
-import Hidden from "@material-ui/core/Hidden"
+import Hidden from "@material-ui/core/Hidden";
 
 const ChatNav = ({ selectedChat }) => {
   const { setSelectedChat } = useContext(ChatContext);
@@ -16,16 +16,16 @@ const ChatNav = ({ selectedChat }) => {
   return (
     <div className="chatnav">
       <Hidden only="lg">
-      <div className="chatnav__left">
-        <ArrowBackIcon onClick={clearSelectedChat} />
-        <Avatar src={selectedChat.photoUrl} />
-        <h2> {selectedChat.name} </h2>
-      </div>
-      <div className="chatnav__right">
-        <VideocamIcon />
-        <CallIcon />
-        <MoreVertIcon />
-      </div>
+        <div className="chatnav__left">
+          <ArrowBackIcon onClick={clearSelectedChat} />
+          <Avatar src={selectedChat.photoUrl} />
+          <h2> {selectedChat.name} </h2>
+        </div>
+        <div className="chatnav__right">
+          <VideocamIcon />
+          <CallIcon />
+          <MoreVertIcon />
+        </div>
       </Hidden>
     </div>
   );

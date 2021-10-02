@@ -61,7 +61,7 @@ import {
   FaFileImage,
   FaVideo,
   FaFilePdf,
-  FaImage,
+  FaImage
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useStateValue } from "../../StateProvider";
@@ -87,7 +87,7 @@ const toastInfo = (toastTitle, toastId, position) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined,
+    progress: undefined
   });
 };
 
@@ -113,7 +113,7 @@ const attachButtons = [
   { icon: "attachContacts", label: "Choose contact" },
   { icon: "attachDocument", label: "Choose document" },
   { icon: "attachCamera", label: "Use camera" },
-  { icon: "attachImage", label: "Choose image" },
+  { icon: "attachImage", label: "Choose image" }
 ];
 
 function Alert(props) {
@@ -149,7 +149,7 @@ CircularProgressWithLabel.propTypes = {
    * The value of the progress indicator for the determinate variant.
    * Value between 0 and 100.
    */
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
 function CircularStatic() {
@@ -174,8 +174,8 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
+    color: "#fff"
+  }
 }));
 
 const ChatInput = ({
@@ -184,7 +184,7 @@ const ChatInput = ({
   roomId,
   db,
   firebase,
-  storage,
+  storage
 }) => {
   const { selectedChat } = useContext(ChatContext);
   const [message, setMessage] = useState("");
@@ -198,7 +198,7 @@ const ChatInput = ({
       const newMessage = {
         type: "sent",
         content: message,
-        timestamp: "9:10 AM",
+        timestamp: "9:10 AM"
       };
       setMessages([...selectedChat.messages, newMessage]);
       selectedChat.messages.push(newMessage);
@@ -259,7 +259,7 @@ const ChatInput = ({
       message: "Notification Title",
       description:
         "I will never close automatically. This is a purposely very very long description that has many many characters and words.",
-      duration: 0,
+      duration: 0
     };
     notification.open(args);
   };
@@ -283,7 +283,7 @@ const ChatInput = ({
   const [counter, setCounter] = useState(0);
   var i = 0;
   const recorder = new MicRecorder({
-    bitRate: 128,
+    bitRate: 128
   });
   const [blobUrl, setBlobUrl] = useState("");
   const [isBlocked, setIsBlocked] = useState(false);
@@ -387,15 +387,15 @@ const ChatInput = ({
   const [openVideoModal, setOpenVideoModal] = React.useState(false);
   const [videoSelectedFile, setVideoSelectedFile] = useState({
     fileLink: "",
-    fileType: "",
+    fileType: ""
   });
   const [docSelectedFile, setDocSelectedFile] = useState({
     fileLink: "",
-    fileType: "",
+    fileType: ""
   });
   const [imageSelectedFile, setImageSelectedFile] = useState({
     fileLink: "",
-    fileType: "",
+    fileType: ""
   });
 
   const handleVideoFileChange = (e) => {
@@ -403,7 +403,7 @@ const ChatInput = ({
     const videofilelink = URL.createObjectURL(videofile);
     const updatedVideoState = {
       fileLink: videofilelink,
-      fileType: videofile.type,
+      fileType: videofile.type
     };
     setVideoSelectedFile({ ...videoSelectedFile, ...updatedVideoState });
     setShow(true);
@@ -442,7 +442,7 @@ const ChatInput = ({
     const docFileURL = URL.createObjectURL(filefileUploaded);
     const updateDocSelectedFile = {
       fileLink: docFileURL,
-      fileType: filefileUploaded.type,
+      fileType: filefileUploaded.type
     };
     setDocSelectedFile({ ...docSelectedFile, ...updateDocSelectedFile });
     setAnchorEl(null);
@@ -459,7 +459,7 @@ const ChatInput = ({
     const imageFileURL = URL.createObjectURL(imageUploaded);
     const updateImageSelectedFile = {
       fileLink: imageFileURL,
-      fileType: imageUploaded.type,
+      fileType: imageUploaded.type
     };
     setAnchorEl(null);
     setShowImg(true);
@@ -470,7 +470,7 @@ const ChatInput = ({
   };
   const docs = [
     { uri: fileURL },
-    { uri: fileURL }, // Local File
+    { uri: fileURL } // Local File
   ];
 
   var playURL =
@@ -480,11 +480,11 @@ const ChatInput = ({
 
   var sources = {
     hd: {
-      play_url: videoURL,
+      play_url: videoURL
     },
     sd: {
-      play_url: videoURL,
-    },
+      play_url: videoURL
+    }
   };
 
   const [openFileModal, setOpenFileModal] = React.useState(false);
@@ -507,8 +507,8 @@ const ChatInput = ({
       uid: "-1",
       name: "image.png",
       status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+    }
   ]);
 
   const onChange = ({ fileList: newFileList }) => {
@@ -579,7 +579,12 @@ const ChatInput = ({
         // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
         // await fileRef.put(file);
         setFileVideoUrl(URL.createObjectURL(videofilehref));
-        console.log("uploading video", fileVideoUrl , "Type " ,videofilehref.type);
+        console.log(
+          "uploading video",
+          fileVideoUrl,
+          "Type ",
+          videofilehref.type
+        );
       }
       setDrawerVideoBottom(true);
     }
@@ -593,14 +598,14 @@ const ChatInput = ({
       //     ".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf"
       //   )
       // )
-       {
+      {
         // const videosRef = storageRef.child(`rooms/${roomName}/videos`);
         // const fileRef = videosRef.child(new Date().getTime() + " " + file.name);
         // await fileRef.put(file);
         await setFileDocUrl(URL.createObjectURL(docfilehref));
         await setfileDocName(docfilehref.name);
         await setfileDocType(docfilehref.type);
-        console.log("uploading Doc", fileDocUrl,"Type :" ,fileDocType);
+        console.log("uploading Doc", fileDocUrl, "Type :", fileDocType);
       }
       setDrawerDocBottom(true);
     }
@@ -610,12 +615,12 @@ const ChatInput = ({
     {
       title: "Room 'Available Soon'",
       icon: <VideoCallIcon color="#fff" style={{ color: "#fff" }} />,
-      id: Math.random() * 100000,
+      id: Math.random() * 100000
     },
     {
       title: "Contact   'Available Soon'",
       icon: <PersonIcon style={{ color: "#fff" }} color="#fff" />,
-      id: Math.random() * 100000,
+      id: Math.random() * 100000
     },
     {
       title: "Document",
@@ -626,7 +631,7 @@ const ChatInput = ({
           color="#fff "
         />
       ),
-      id: Math.random() * 100000,
+      id: Math.random() * 100000
     },
     {
       title: "Photos",
@@ -637,7 +642,7 @@ const ChatInput = ({
           color="#fff"
         />
       ),
-      id: Math.random() * 100000,
+      id: Math.random() * 100000
     },
     {
       title: "Videos",
@@ -648,8 +653,8 @@ const ChatInput = ({
           color="#fff"
         />
       ),
-      id: Math.random() * 100000,
-    },
+      id: Math.random() * 100000
+    }
   ];
 
   return (
@@ -898,7 +903,7 @@ const ChatInput = ({
                             height="34"
                           >
                             <path
-                                fill="#020C24"
+                              fill="#020C24"
                               d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"
                             ></path>
                           </svg>
@@ -922,7 +927,7 @@ const ChatInput = ({
                                   <span
                                     style={{
                                       fontSize: "14px",
-                                      padding: "8px 5px 8px 5px",
+                                      padding: "8px 5px 8px 5px"
                                     }}
                                   >
                                     {attachFileList.title}
@@ -961,7 +966,7 @@ const ChatInput = ({
                                       type="file"
                                       onChange={onDocFileChange}
                                       accept=".doc,.docx,application/msword,.pdf,.zip,application/zip,.rar,application/rar,application/pdf"
-                                       ref={hiddenFileInput}
+                                      ref={hiddenFileInput}
                                     />
                                   </div>
                                 </Fab>
@@ -1196,7 +1201,7 @@ const ChatInput = ({
                     marginTop: "-60px",
                     border: "none",
                     outline: "none",
-                    marginLeft: "-20em",
+                    marginLeft: "-20em"
                   }}
                   open={openMenuBar}
                   variant="menu"
@@ -1207,8 +1212,8 @@ const ChatInput = ({
                       width: "48%",
                       maxWidth: "48%",
                       left: 0,
-                      right: 0,
-                    },
+                      right: 0
+                    }
                   }}
                   anchorOrigin={{ vertical: "bottom" }}
                   transformOrigin={{ vertical: "top" }}
@@ -1226,18 +1231,17 @@ const ChatInput = ({
                   onClick={startRecording}
                   // style={{ width: 20, height: 20, color: "#000" }}
                 >
-                    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="34"
-      height="34"
-      
-    >
-      <path
-        fill="#020C24"
-        d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"
-      ></path>
-    </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="34"
+                    height="34"
+                  >
+                    <path
+                      fill="#020C24"
+                      d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"
+                    ></path>
+                  </svg>
                 </IconButton>
               </div>
             </div>

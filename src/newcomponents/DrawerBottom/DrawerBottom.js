@@ -15,11 +15,11 @@ import "../../Styles/DrawerBottom.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
   drawerPaper: {
     position: "absolute",
-    width: "100%",
+    width: "100%"
     // height: '90vh',
     // [theme.breakpoints.up("xs")]: {
     //   width: "100vw",
@@ -40,18 +40,18 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     maxHeight: "120%",
     [theme.breakpoints.up("xs")]: {
-      top: 52,
+      top: 52
     },
     [theme.breakpoints.up("sm")]: {
-      top: 65,
+      top: 65
     },
     [theme.breakpoints.up("md")]: {
-      top: 65,
+      top: 65
     },
     [theme.breakpoints.up("lg")]: {
-      top: -5,
-    },
-  },
+      top: -5
+    }
+  }
 }));
 
 function DrawerBottom({
@@ -63,7 +63,7 @@ function DrawerBottom({
   setFileImageUrl,
   firebase,
   db,
-  storage,
+  storage
 }) {
   const classes = useStyles();
   // const [{ user }] = useStateValue();
@@ -71,7 +71,6 @@ function DrawerBottom({
   const { roomId } = useParams();
 
   const handleUpload = (e) => {
-    
     // if (fileImageUrl) {
     //   db.collection("rooms")
     //     .doc(roomId)
@@ -146,7 +145,7 @@ function DrawerBottom({
         open={drawerBottom}
         classes={{
           paper: classes.drawerPaper,
-          paperAnchorBottom: classes.paperAnchorBottom,
+          paperAnchorBottom: classes.paperAnchorBottom
         }}
       >
         <div className="drawerBottom__header">
@@ -160,22 +159,21 @@ function DrawerBottom({
 
         <div className="drawerBottom__content">
           <div className="drawerBottom__content_photo">
-            {fileImageUrl ? (
-              <img src={fileImageUrl} alt="" />
-            ) : null
-            
-            // (  <div className="drawerBottom__content_video">
-            //     <div className="player-wrapper">
-            //       <ReactPlayer
-            //         className="react-player"
-            //         width="100%"
-            //         height="50%"
-            //         url={fileVideoUrl}
-            //         controls={true}
-            //       />
-            //     </div>
-            //   </div> )
-           }
+            {
+              fileImageUrl ? <img src={fileImageUrl} alt="" /> : null
+
+              // (  <div className="drawerBottom__content_video">
+              //     <div className="player-wrapper">
+              //       <ReactPlayer
+              //         className="react-player"
+              //         width="100%"
+              //         height="50%"
+              //         url={fileVideoUrl}
+              //         controls={true}
+              //       />
+              //     </div>
+              //   </div> )
+            }
           </div>
           <div className="drawerBottom__content_caption">
             <input

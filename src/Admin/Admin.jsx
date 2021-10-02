@@ -9,7 +9,7 @@ import {
   Route,
   Link,
   useParams,
-  useRouteMatch,
+  useRouteMatch
 } from "react-router-dom";
 import logo from "../Images/logo.png";
 import Box from "@material-ui/core/Box";
@@ -51,7 +51,7 @@ export default function Admin() {
   let { path, url } = useRouteMatch();
   return (
     <>
-      <Navbar expand="lg" style={{backgroundColor:"#020C24"}}>
+      <Navbar expand="lg" style={{ backgroundColor: "#020C24" }}>
         <Container>
           <Navbar.Brand>
             <Link to="/Admin">
@@ -61,13 +61,12 @@ export default function Admin() {
               />
             </Link>
           </Navbar.Brand>
-          &nbsp;
-          &nbsp;
+          &nbsp; &nbsp;
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="mr-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" ,fontSize:"14pt"}}
+              style={{ maxHeight: "100px", fontSize: "14pt" }}
               navbarScroll
             >
               <Nav.Link active>
@@ -82,7 +81,7 @@ export default function Admin() {
               </Nav.Link>
               <Nav.Link>
                 <Link to={`AdminAssestance`} style={{ color: "#ccc" }}>
-                ASSISTENZA
+                  ASSISTENZA
                 </Link>
               </Nav.Link>
               <Nav.Link>

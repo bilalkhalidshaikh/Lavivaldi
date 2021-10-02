@@ -1,10 +1,10 @@
-import {useEffect,useState} from 'react'
+import { useEffect, useState } from "react";
 import ChatInput from "../ChatInput/ChatInput";
 import ReceiverMessage from "../ReceiverMessage/ReceiverMessage";
 import SenderMessage from "../SenderMessage/SenderMessage";
 import "./ChatArea.css";
 
-import {useStateValue } from "../../StateProvider"
+import { useStateValue } from "../../StateProvider";
 import { useHistory, useParams } from "react-router-dom";
 
 const ChatArea = ({ messages, setMessages }) => {
@@ -16,7 +16,6 @@ const ChatArea = ({ messages, setMessages }) => {
   const [roomOwner, setRoomOwner] = useState("");
   const [loading, setLoading] = useState(false);
   const [showLandingScreenPhoto, setShowLandingScreenPhoto] = useState(false);
-  
 
   return (
     <div className="chatarea">
@@ -30,11 +29,14 @@ const ChatArea = ({ messages, setMessages }) => {
           );
         })}
       </div>
-      <ChatInput setMessages={setMessages}    roomName={roomName}
-              roomId={roomId}
-              db={"db"}
-              firebase={"firebase"}
-              storage={"storage"} />
+      <ChatInput
+        setMessages={setMessages}
+        roomName={roomName}
+        roomId={roomId}
+        db={"db"}
+        firebase={"firebase"}
+        storage={"storage"}
+      />
     </div>
   );
 };

@@ -11,10 +11,10 @@
 }
 .contactcard__username {
   margin-left: 10px;
-  color:#ccc !important;
+  color: #ccc !important;
 }
 .contactcard__username > h3 {
   font-size: 1.2rem;
   font-weight: 545;
-  color:#ccc !important;
+  color: #ccc !important;
 }
