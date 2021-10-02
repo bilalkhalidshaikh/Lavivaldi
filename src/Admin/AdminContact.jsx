@@ -23,7 +23,7 @@ import {
   Form,
   Avatar,
   Typography,
-  List,
+  List
 } from "antd";
 // import { ListGroup } from "react-bootstrap";
 import { AudioOutlined } from "@ant-design/icons";
@@ -32,7 +32,7 @@ import { DownOutlined } from "@ant-design/icons";
 import {
   EditOutlined,
   EllipsisOutlined,
-  SettingOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import SweetAlert from "react-bootstrap-sweetalert";
 import AvatarImg from "./../Images/avatar.png";
@@ -53,11 +53,11 @@ function RemoteData() {
               style={{ height: 36, borderRadius: "50%" }}
               src={rowData.avatar}
             />
-          ),
+          )
         },
         { title: "Id", field: "id" },
         { title: "First Name", field: "first_name" },
-        { title: "Last Name", field: "last_name" },
+        { title: "Last Name", field: "last_name" }
       ]}
       data={(query) =>
         new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ function RemoteData() {
               resolve({
                 data: result.data,
                 page: result.page - 1,
-                totalCount: result.total,
+                totalCount: result.total
               });
             });
         })
@@ -86,13 +86,13 @@ class DrawerForm extends React.Component {
 
   showDrawer = () => {
     this.setState({
-      visible: true,
+      visible: true
     });
   };
 
   onClose = () => {
     this.setState({
-      visible: false,
+      visible: false
     });
   };
 
@@ -111,7 +111,7 @@ class DrawerForm extends React.Component {
           footer={
             <div
               style={{
-                textAlign: "right",
+                textAlign: "right"
               }}
             >
               <Button onClick={this.onClose} style={{ marginRight: 8 }}>
@@ -130,7 +130,7 @@ class DrawerForm extends React.Component {
                   name="name"
                   label="Name"
                   rules={[
-                    { required: true, message: "Please enter user name" },
+                    { required: true, message: "Please enter user name" }
                   ]}
                 >
                   <Input placeholder="Please enter user name" />
@@ -157,7 +157,7 @@ class DrawerForm extends React.Component {
                   name="owner"
                   label="Owner"
                   rules={[
-                    { required: true, message: "Please select an owner" },
+                    { required: true, message: "Please select an owner" }
                   ]}
                 >
                   <Select placeholder="Please select an owner">
@@ -171,7 +171,7 @@ class DrawerForm extends React.Component {
                   name="type"
                   label="Type"
                   rules={[
-                    { required: true, message: "Please choose the type" },
+                    { required: true, message: "Please choose the type" }
                   ]}
                 >
                   <Select placeholder="Please choose the type">
@@ -187,7 +187,7 @@ class DrawerForm extends React.Component {
                   name="approver"
                   label="Approver"
                   rules={[
-                    { required: true, message: "Please choose the approver" },
+                    { required: true, message: "Please choose the approver" }
                   ]}
                 >
                   <Select placeholder="Please choose the approver">
@@ -201,7 +201,7 @@ class DrawerForm extends React.Component {
                   name="dateTime"
                   label="DateTime"
                   rules={[
-                    { required: true, message: "Please choose the dateTime" },
+                    { required: true, message: "Please choose the dateTime" }
                   ]}
                 >
                   <DatePicker.RangePicker
@@ -219,8 +219,8 @@ class DrawerForm extends React.Component {
                   rules={[
                     {
                       required: true,
-                      message: "please enter url description",
-                    },
+                      message: "please enter url description"
+                    }
                   ]}
                 >
                   <Input.TextArea
@@ -241,13 +241,13 @@ const useStylesGrid = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
+    color: theme.palette.text.secondary
+  }
 }));
 
 function FullWidthGrid() {
@@ -277,13 +277,13 @@ const useStylesGridTwo = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
+    color: theme.palette.text.secondary
+  }
 }));
 
 function FullWidthGridTwo() {
@@ -343,7 +343,7 @@ const Profile = ({ text }) => {
     "Japanese princess to wed commoner.",
     "Australian walks 100km after outback crash.",
     "Man charged over missing wedding girl.",
-    "Los Angeles battles huge wildfires.",
+    "Los Angeles battles huge wildfires."
   ];
 
   return (
@@ -360,7 +360,7 @@ const Profile = ({ text }) => {
         bodyStyle={{
           paddingBottom: 80,
           backgroundColor: "#020C24",
-          color: "#ccc",
+          color: "#ccc"
         }}
       >
         <Card
@@ -368,7 +368,7 @@ const Profile = ({ text }) => {
             width: 300,
             backgroundColor: "#020C24",
             color: "#ccc",
-            border: "none",
+            border: "none"
           }}
         >
           <Meta
@@ -436,7 +436,7 @@ const ProfileTwo = ({ text }) => {
     "Japanese princess to wed commoner.",
     "Australian walks 100km after outback crash.",
     "Man charged over missing wedding girl.",
-    "Los Angeles battles huge wildfires.",
+    "Los Angeles battles huge wildfires."
   ];
 
   return (
@@ -453,7 +453,7 @@ const ProfileTwo = ({ text }) => {
         bodyStyle={{
           paddingBottom: 80,
           backgroundColor: "#020C24",
-          color: "#ccc",
+          color: "#ccc"
         }}
       >
         <Card
@@ -461,19 +461,21 @@ const ProfileTwo = ({ text }) => {
             width: 300,
             backgroundColor: "#020C24",
             color: "#ccc",
-            border: "none",
+            border: "none"
           }}
         >
           <Meta
             avatar={
               <Avatar
                 size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4g8xUnnDU4kVOp8_-3f3aPDusw_D2AlyXw&usqp=CAU"}
+                src={
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU4g8xUnnDU4kVOp8_-3f3aPDusw_D2AlyXw&usqp=CAU"
+                }
               />
             }
             title={
               <Title level={2} style={{ color: "#ccc" }}>
-               Jim Grean
+                Jim Grean
               </Title>
             }
           />
@@ -493,7 +495,7 @@ const ProfileTwo = ({ text }) => {
           <Divider style={{ border: "1px solid #ccc" }} />
 
           <Title level={2} style={{ textAlign: "center", color: "#ccc" }}>
-           Students
+            Students
           </Title>
           <FullWidthGrid />
           <Divider style={{ border: "1px solid #ccc" }} />
@@ -534,7 +536,7 @@ const columns = [
     title: "Name e Surname",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a>{text}</a>
   },
   {
     title: "Teacher",
@@ -554,29 +556,29 @@ const columns = [
           );
         })}
       </>
-    ),
+    )
   },
   {
     title: "Email",
     dataIndex: "age",
-    key: "age",
+    key: "age"
   },
   {
     title: "Expiry",
     dataIndex: "new",
-    key: "new",
+    key: "new"
   },
   {
     title: "Status",
     dataIndex: "address",
-    key: "address",
+    key: "address"
   },
 
   {
     title: "Action",
     key: "action",
-    dataIndex: "action",
-  },
+    dataIndex: "action"
+  }
 ];
 
 const data = [
@@ -609,7 +611,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "2",
@@ -640,7 +642,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "3",
@@ -671,7 +673,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "4",
@@ -702,7 +704,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "5",
@@ -733,7 +735,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "6",
@@ -764,7 +766,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "7",
@@ -795,7 +797,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "8",
@@ -826,7 +828,7 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "9",
@@ -857,8 +859,8 @@ const data = [
           </a>
         </Dropdown>
       </>
-    ),
-  },
+    )
+  }
 ];
 
 const columnsTwo = [
@@ -866,7 +868,7 @@ const columnsTwo = [
     title: "Name e Surname",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a>{text}</a>
   },
   {
     title: "Students",
@@ -886,29 +888,29 @@ const columnsTwo = [
           );
         })}
       </>
-    ),
+    )
   },
   {
     title: "Email",
     dataIndex: "age",
-    key: "age",
+    key: "age"
   },
   {
     title: "Expiry",
     dataIndex: "new",
-    key: "new",
+    key: "new"
   },
   {
     title: "Status",
     dataIndex: "address",
-    key: "address",
+    key: "address"
   },
 
   {
     title: "Action",
     key: "action",
-    dataIndex: "action",
-  },
+    dataIndex: "action"
+  }
 ];
 
 const dataTwo = [
@@ -940,7 +942,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "2",
@@ -971,7 +973,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "3",
@@ -1002,7 +1004,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "4",
@@ -1033,7 +1035,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "5",
@@ -1064,7 +1066,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "6",
@@ -1095,7 +1097,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "7",
@@ -1126,7 +1128,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "8",
@@ -1157,7 +1159,7 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
+    )
   },
   {
     key: "9",
@@ -1188,8 +1190,8 @@ const dataTwo = [
           </a>
         </Dropdown>
       </>
-    ),
-  },
+    )
+  }
 ];
 
 const { TabPane } = Tabs;
@@ -1200,7 +1202,7 @@ const suffix = (
   <AudioOutlined
     style={{
       fontSize: 16,
-      color: "#1890ff",
+      color: "#1890ff"
     }}
   />
 );
@@ -1217,7 +1219,7 @@ const operations = (
 
 const OperationsSlot = {
   left: <Button className="tabs-extra-demo-button">Left Extra Action</Button>,
-  right: <Button>Right Extra Action</Button>,
+  right: <Button>Right Extra Action</Button>
 };
 
 export default function AdminContact() {

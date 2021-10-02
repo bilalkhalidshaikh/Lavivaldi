@@ -22,7 +22,7 @@ const options = [
   "Sedna",
   "Titania",
   "Triton",
-  "Umbriel",
+  "Umbriel"
 ];
 
 const ITEM_HEIGHT = 48;
@@ -59,8 +59,8 @@ function LongMenu() {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
+            width: "20ch"
+          }
         }}
       >
         {options.map((option) => (

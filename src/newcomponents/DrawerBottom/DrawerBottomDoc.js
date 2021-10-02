@@ -20,11 +20,11 @@ import example from "../../Images/example.pdf";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
   drawerPaper: {
     position: "absolute",
-    width: "100%",
+    width: "100%"
     // height: '90vh',
     // [theme.breakpoints.up("xs")]: {
     //   width: "100vw",
@@ -45,18 +45,18 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     maxHeight: "120%",
     [theme.breakpoints.up("xs")]: {
-      top: 52,
+      top: 52
     },
     [theme.breakpoints.up("sm")]: {
-      top: 65,
+      top: 65
     },
     [theme.breakpoints.up("md")]: {
-      top: 65,
+      top: 65
     },
     [theme.breakpoints.up("lg")]: {
-      top: 0,
-    },
-  },
+      top: 0
+    }
+  }
 }));
 
 function DrawerBottom({
@@ -65,7 +65,7 @@ function DrawerBottom({
   fileImageUrl,
   fileDocUrl,
   fileDocName,
-  fileDocType,
+  fileDocType
 }) {
   const classes = useStyles();
   const [caption, setCaption] = useState("");
@@ -94,7 +94,7 @@ function DrawerBottom({
         open={drawerBottom}
         classes={{
           paper: classes.drawerPaper,
-          paperAnchorBottom: classes.paperAnchorBottom,
+          paperAnchorBottom: classes.paperAnchorBottom
         }}
       >
         <div className="drawerBottom__header">
